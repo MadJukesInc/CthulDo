@@ -3,7 +3,6 @@
 ### Yeoman template
 node_modules/
 bower_components/
-*.log
 
 build/
 dist/
@@ -142,6 +141,3 @@ crashlytics-build.properties
 *.un~
 Session.vim
 .netrwhist
-*~
-
-
