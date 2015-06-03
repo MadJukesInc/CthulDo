@@ -1,2 +1,3 @@
-# CthulDo
-ToDo application using Kraken.js
+# .
+
+ToDo App using Kraken.js
