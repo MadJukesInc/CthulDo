@@ -47,6 +47,8 @@
                             "i18n": "config:i18n"
                         },
                         "css": {
+                            //TODO add option to add more middlewares
+                            //eg add field called "middleware"
                             "module": "path:./lib/middleware/bootstrap2styl",
                             "files": "/css/**/*.css"
                         },
