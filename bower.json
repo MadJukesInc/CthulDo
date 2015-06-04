@@ -22,6 +22,10 @@
   ],
   "dependencies": {
     "dustjs-linkedin": "~2.3.0",
-    "dustjs-linkedin-helpers": "~1.2.0"
+    "dustjs-linkedin-helpers": "~1.2.0",
+    "marionette": "~2.4.1"
+  },
+  "resolutions": {
+    "underscore": "1.4.4 - 1.6.0"
   }
 }
