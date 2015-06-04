@@ -1,5 +1,5 @@
 {
-    
+
     "express": {
         "view cache": false,
         "view engine": "dust",
@@ -34,7 +34,12 @@
                 "arguments": [
                     "path:./public",
                     "path:./.build",
-                    {   
+                    {
+                        "browserify": {
+                            "module": "kraken-devtools-browserify",
+                            "files": "/js/**/*.js",
+                            "transform": ["debowerify"]
+                        },
                         "template": {
                             "module": "kraken-devtools/plugins/dustjs",
                             "files": "/templates/**/*.js",
