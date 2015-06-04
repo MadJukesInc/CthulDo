@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "dustjs-linkedin": "~2.3.0",
-    "dustjs-linkedin-helpers": "~1.2.0"
+    "dustjs-linkedin-helpers": "~1.2.0",
+    "bootstrap": "~3.3.4"
   }
 }
