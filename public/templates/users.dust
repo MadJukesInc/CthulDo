@@ -1,0 +1,22 @@
+{> "layouts/master" /}
+
+{<body}
+
+    <div class="container">
+        <h3>The Page of Doom</h3>
+        <table class="table">
+            <tr>
+                <th>Name:</th>
+                <th>Date Created:</th>
+                <th>Last Updated:</th>
+            </tr>
+            {#users}
+                <tr>
+                    <td>{name} </td>
+                    <td>{createdAt}</td>
+                    <td>{updatedAt}</td>
+                </tr>
+            {/users}
+        </table>
+    </div>
+{/body}
