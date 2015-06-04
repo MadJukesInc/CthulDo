@@ -47,7 +47,7 @@
                             "i18n": "config:i18n"
                         },
                         "css": {
-                            "module": "kraken-devtools/plugins/stylus",
+                            "module": "path:./lib/middleware/bootstrap2styl",
                             "files": "/css/**/*.css"
                         },
                         "copier": {
