@@ -20,6 +20,7 @@
     "kraken-devtools-browserify": "0.0.3",
     "kraken-js": "^1.0.1",
     "localizr": "^0.1.0",
+    "lodash": "^3.9.3",
     "stylus": "^0.51.1"
   },
   "devDependencies": {
