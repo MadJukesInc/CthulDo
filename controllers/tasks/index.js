@@ -20,4 +20,20 @@ module.exports = function (router) {
         res.status(200);
         res.send(newTask);
     });
+
+    router.get('/:taskID', function(req, res) {
+
+    });
+
+    router.put('/:taskID', function(req, res) {
+
+    });
+
+    router.patch('/:taskID', function(req, res) {
+
+    });
+
+    router.delete('/:taskID', function(req, res) {
+
+    });
 };
