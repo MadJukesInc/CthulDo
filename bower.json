@@ -21,8 +21,8 @@
     "tests"
   ],
   "dependencies": {
-    "dustjs-linkedin": "~2.3.0",
-    "dustjs-linkedin-helpers": "~1.2.0",
+    "dustjs-linkedin": "~2.6.0",
+    "dustjs-linkedin-helpers": "~1.6.0",
     "backbone.marionette": "~2.4.1"
   },
   "resolutions": {
