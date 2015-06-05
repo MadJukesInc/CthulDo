@@ -1,7 +1,7 @@
 'use strict';
 
 
-var IndexModel = require('../models/index');
+var IndexModel = require('../../models/index');
 
 
 module.exports = function (router) {

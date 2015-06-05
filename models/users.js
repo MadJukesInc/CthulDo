@@ -19,8 +19,11 @@ module.exports = function UsersModel() {
 
             });
         },
-        post: function (user) {
-            db.postUsers(user);
+        post: function (user, cb) {
+            db.postUsers(user, function (err, result) {
+                cb(err,result);
+
+            });
         }
     }
 
