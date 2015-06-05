@@ -59,6 +59,13 @@
                     }
                 ]
             }
+        },
+
+        "appsec": {
+            "enabled": false,
+            "priority": 111,
+            "module": "lusca"
         }
+
     }
 }
