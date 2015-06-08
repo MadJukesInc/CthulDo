@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head class="header">
+<head>
     <meta charset="utf-8"/>
     <title>Test App</title>
-    <link rel="stylesheet" href="/css/app.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body>
-
+<div class="header"></div>
 <div class="sidebar"></div>
 <div id="wrapper" class="content">
 </div>
