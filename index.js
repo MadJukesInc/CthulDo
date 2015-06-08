@@ -47,10 +47,10 @@ debugServer.on('listening', function () {
 
 httpServer = http.createServer(app).listen(httpPort);
 httpServer.on('listening', function () {
-    console.log('Server listening on http://localhost:%d', this.address().port);
+    console.log('Server listening on http://localhost');
 });
 
 httpsServer = https.createServer(httpsOptions, app).listen(httpsPort);
 httpsServer.on('listening', function () {
-    console.log('Server listening on http://localhost:%d', this.address().port);
+    console.log('Server listening on https://localhost');
 });
