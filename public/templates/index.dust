@@ -1,5 +1,62 @@
 {>"layouts/master" /}
 
 {<body}
-    <h1>{@pre type="content" key="greeting"/}</h1>
+    <div class="container">
+        <div class="row">
+            <h1>
+                <br><br><br>
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1>CthulDo</h1>
+                    </div>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text"
+                                    placeholder="Task title">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    Add!
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>Completed</th>
+                            <th>Title</th>
+                            <th>Member</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox"/>
+                            </td>
+                            <td>Make Bootstrap Design</td>
+                            <td>
+                                <div class="container-fluid">
+                                    <a>
+                                        <span class="label label-default">
+                                            JW
+                                        </span>
+                                    </a>
+                                    <a>
+                                        <span class="label label-default">
+                                            NV
+                                        </span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {/body}
