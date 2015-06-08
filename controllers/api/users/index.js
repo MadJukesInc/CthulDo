@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var UsersModel = require('../../models/users');
+var UsersModel = require('../../../models/users');
 
 module.exports = function (router) {
     var users = new UsersModel();
