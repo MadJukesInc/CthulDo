@@ -30,4 +30,4 @@ var UsersModel = function UsersModelConstructor() {
     };
 };
 
-module.exports = UsersModel;
+module.exports = UsersModel();
