@@ -1,24 +1,36 @@
 'use strict';
 
 var _ = require('lodash');
-var TasksModel = require('../../models/tasks');
+var tasks = require('../../models/tasks');
 
 
 module.exports = function (router) {
-    var tasks = new TasksModel();
-
     router.get('/', function (req, res) {
-        res.status(200);
-        res.send(tasks);
+        tasks.get(function (err, results) {
+            if (err) {
+                res.sendStatus(500);
+                return;
+            }
+
+            res.status(200);
+            res.send(results);
+        });
     });
 
     router.post('/', function(req, res) {
         var newTask = req.body;
 
-        tasks.push(newTask);
+        console.log(JSON.parse(newTask));
 
-        res.status(200);
-        res.send(newTask);
+        tasks.post(newTask, function (err, results) {
+            if (err) {
+                res.sendStatus(500);
+                return;
+            }
+
+            res.status(200);
+            res.send(results);
+        });
     });
 
     router.get('/:taskID', function(req, res) {
