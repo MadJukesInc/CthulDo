@@ -3,7 +3,7 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 Backbone.$ = $;
 var AppInstance;
-//var template = require('../../../../templates/tasks.dust');
+var template = require('../../../../templates/tasks/tasks.dust');
 var TaskModel = Backbone.Model.extend({
     url: '/api/tasks'
 });
@@ -14,7 +14,8 @@ module.exports = Backbone.View.extend({
     events: function () {
         return {
             'submit': 'onAddTask',
-            'click .delete-task': 'remTask'
+            'click .delete-task': 'remTask',
+            'click .complete': 'markCompleted'
         };
     },
 
@@ -25,7 +26,8 @@ module.exports = Backbone.View.extend({
      */
 
     render: function () {
-        this.$el.empty();
+        //this.$el.empty();
+        var self = this;
 
         var tasklist = new TaskModel();
         tasklist.fetch({
@@ -46,7 +48,7 @@ module.exports = Backbone.View.extend({
 
     onAddTask: function (e) {
         e.preventDefault();
-        var formData = $('.form-task').serializeArray();
+        var formData = $('.task-form').serializeArray();
         var taskDetails = {};
 
         _.forEach(formData, function forEveryFormData(val) {
@@ -58,22 +60,21 @@ module.exports = Backbone.View.extend({
         task.save(taskDetails, {
             success: function (task) {
                 console.log('Success');
-                self.render();
+                //self.render();
             }
         });
 
         return false;
     },
-    remUser: function(e) {
+    remTask: function (e) {
         e.preventDefault();
-        console.log(e);
         var entry = e.currentTarget.value;
-        var user = new UserModel({
-            name: entry
+        var task = new TaskModel({
+            title: entry
         });
-        user.destroy({
+        task.destroy({
             success: function () {
-                $('#tr-'+entry).remove();
+                $('#tr-' + entry).remove();
 
             },
             failure: function () {
@@ -82,5 +83,21 @@ module.exports = Backbone.View.extend({
         });
         return false;
 
+    },
+    markCompleted: function (e) {
+        console.log(e);
+        var entry = e.currentTarget.value;
+        var task = new TaskModel({
+            title: entry
+        });
+        task.set({completed: true}, {
+            success: function () {
+                //$('#tr-' + entry).remove();
+            },
+            failure: function () {
+                console.log('The Command to delete: ' + entry + ' failed');
+            }
+        });
+        return false;
     }
 });
