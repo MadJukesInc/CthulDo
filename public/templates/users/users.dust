@@ -1,26 +1,35 @@
 <div class="container">
-    <h3>The Page of Doom</h3>
-    <table class="table">
-        <tr>
-            <th>Name:</th>
-            <th>Date Created:</th>
-            <th>Last Updated:</th>
-        </tr>
-        {#users}
-            <tr>
-                <td>{name} </td>
-                <td>{createdAt}</td>
-                <td>{updatedAt}</td>
-            </tr>
-        {/users}
-    </table>
-    <article id="users"></article>
-</div>
-<div class="container">
-    <form class="form-user">
-        <h2 class="form-user-heading">Create USer</h2>
-        <input class="form-control" type="text" required name="name" placeholder="Email address">
-        <button class="btn btn-lg btn-primary btn-block user-submit" id="submit" type="submit">Sign in</button>
-    </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>User List</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <tr>
+                    <th>Name:</th>
+                    <th>Date Created:</th>
+                    <th>Last Updated:</th>
+                    <th>Edit</th>
+                </tr>
+                {#users}
+                    <tr class="entry" id="tr-{name}">
+                        <td>{name} </td>
+                        <td>{createdAt}</td>
+                        <td>{updatedAt}</td>
+                        <td>
+                            <button class="btn btn-warning delete-user" value="{name}">Delete</button>
+                        </td>
+                    </tr>
+                {/users}
+            </table>
+        </div>
+        <div class="panel-footer">
+            <form class="form-user">
+                <h2 class="form-user-heading">Create User</h2>
+                <input class="form-control" type="text" required name="name" placeholder="Email address"><br/>
+                <button class="btn btn-lg btn-primary btn-block user-submit" id="submit" type="submit">Add User</button>
+            </form>
+        </div>
+    </div>
 </div>
 
