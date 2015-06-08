@@ -1,12 +1,12 @@
 'use strict';
 
 var http = require('http');
-var express = require('express');
+var app = require('express')();
 var kraken = require('kraken-js');
 
 
 var server;
-var options, app;
+var options;
 
 /*
  * Create and configure application. Also exports application instance for use by tests.
@@ -22,7 +22,6 @@ options = {
     }
 };
 
-app = module.exports = express();
 app.use(kraken(options));
 app.on('start', function () {
     console.log('Application ready to serve requests.');
