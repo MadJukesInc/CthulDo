@@ -46,16 +46,20 @@ module.exports = Backbone.View.extend({
 
     onAddUser: function (e) {
         e.preventDefault();
-        var data = $('.form-user').serializeArray();
-        var result = {};
+        var formData = $('.form-user').serializeArray();
+        var userDetails = {};
 
-        _.forEach(data, function forEveryFormData(val) {
-            result[val.name] = val.value;
+        _.forEach(formData, function forEveryFormData(val) {
+            userDetails[val.name] = val.value;
         });
         var self = this;
 
-        $.post("/api/users", result, function (data) {
-            self.render();
+        var user = new UserModel();
+        user.save(userDetails, {
+            success: function (user) {
+                console.log('Success');
+                self.render();
+            }
         });
 
         return false;
