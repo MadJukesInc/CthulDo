@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "ToDo App using Kraken.js",
   "author": "MadJukesInc",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "grunt test"
   },
