@@ -1,5 +1,5 @@
 var Marionette = require('backbone.marionette'),
-    DefaultView = require('./View/Default');
+    listUsersView = require('./View/listUsersView');
 
 module.exports = Marionette.Controller.extend({
 
@@ -18,8 +18,8 @@ module.exports = Marionette.Controller.extend({
      * default page for the blue module.
      */
     defaultUsers: function () {
-        var defaultView = new DefaultView();
-        this.appInstance.regionContent.show(defaultView);
+        var view = new listUsersView();
+        this.appInstance.regionContent.show(view);
     }
 
 
