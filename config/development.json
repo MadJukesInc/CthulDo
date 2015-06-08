@@ -38,7 +38,15 @@
                         "browserify": {
                             "module": "kraken-devtools-browserify",
                             "files": "/js/**/*.js",
-                            "transform": ["debowerify"]
+                            "transform": [
+                                [
+                                    "dustjs-browserify",
+                                    {
+                                        "path": "public/templates"
+                                    }
+                                ],
+                                "debowerify"
+                            ]
                         },
                         "template": {
                             "module": "kraken-devtools/plugins/dustjs",
