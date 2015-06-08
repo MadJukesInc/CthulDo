@@ -22,6 +22,9 @@
     "kraken-js": "^1.0.1",
     "localizr": "^0.1.0",
     "lodash": "^3.9.3",
+    "pg": "^4.4.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.2.0",
     "stylus": "^0.51.1"
   },
   "devDependencies": {
