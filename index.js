@@ -1,9 +1,11 @@
 'use strict';
 
+var http = require('http');
 var express = require('express');
 var kraken = require('kraken-js');
 
 
+var server;
 var options, app;
 
 /*
@@ -25,4 +27,10 @@ app.use(kraken(options));
 app.on('start', function () {
     console.log('Application ready to serve requests.');
     console.log('Environment: %s', app.kraken.get('env:env'));
+});
+
+server = http.createServer(app);
+server.listen(process.env.PORT || 8000);
+server.on('listening', function () {
+    console.log('Server listening on http://localhost:%d', this.address().port);
 });
