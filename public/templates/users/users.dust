@@ -25,10 +25,17 @@
         </div>
         <div class="panel-footer">
             <form class="form-user">
-                <h2 class="form-user-heading">Create User</h2>
-                <input class="form-control" type="text" required name="name" placeholder="Email address"><br/>
-                <button class="btn btn-lg btn-primary btn-block user-submit" id="submit" type="submit">Add User</button>
+                <div class="input-group">
+                    <input class="form-control" required name="name" type="text"
+                           placeholder="Username Here">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default user-submit" type="submit">
+                                    Add!
+                                </button>
+                            </span>
+                </div>
             </form>
+
         </div>
     </div>
 </div>
