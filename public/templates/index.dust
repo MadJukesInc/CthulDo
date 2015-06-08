@@ -24,7 +24,7 @@
                             </span>
                         </div>
                     </div>
-                    <table class="table">
+                    <table class="table table-hover">
                         <tr>
                             <th>Completed</th>
                             <th>Title</th>
@@ -33,25 +33,55 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="checkbox"/>
-                            </td>
-                            <td>Make Bootstrap Design</td>
-                            <td>
-                                <div class="container-fluid">
-                                    <a>
-                                        <span class="label label-default">
-                                            JW
-                                        </span>
-                                    </a>
-                                    <a>
-                                        <span class="label label-default">
-                                            NV
-                                        </span>
-                                    </a>
+                                <div class="col-md-10 col-md-offset-1">
+                                    <input type="checkbox"/>
                                 </div>
                             </td>
                             <td>
-                                <span class="glyphicon glyphicon-remove"></span>
+                                <div>
+                                    Make Bootstrap Design
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <button class="btn btn-default btn-xs">
+                                        JS
+                                    </button>
+                                    <button class="btn btn-default btn-xs">
+                                        KP
+                                    </button>
+                                    <button class="btn btn-default btn-xs">
+                                        NV
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-md-10 col-md-offset-1">
+                                    <input type="checkbox"/>
+                                </div>
+                            </td>
+                            <td>Make Bootstrap Design</td>
+                            <td>
+                                <div>
+                                    <button class="btn btn-default btn-xs">
+                                        KP
+                                    </button>
+                                    <button class="btn btn-default btn-xs">
+                                        NV
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
                             </td>
                         </tr>
                     </table>
