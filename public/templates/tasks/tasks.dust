@@ -1,5 +1,4 @@
 <div class="container">
-
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -40,12 +39,15 @@
                                 </div>
                             </td>
                             <td>
-                                <div>
+                                <div class="btn-group" role="group" aria-label="...">
                                     {#members}
                                         <button class="btn btn-default btn-xs">
                                             {name}
                                         </button>
                                     {/members}
+                                    <button cass="btn btn-default btn-xs">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
                                 </div>
                             </td>
                             <td>
