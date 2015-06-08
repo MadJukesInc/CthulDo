@@ -1,16 +1,33 @@
 'use strict';
 
+var Users = require('../lib/dbModels/Users');
+
 var UsersModel = function UsersModelConstructor() {
-    return [{
-        name: 'me',
-        createdAt: new Date()
-    }, {
-        name: 'kyle',
-        createdAt: new Date()
-    }, {
-        name: 'jason',
-        createdAt: new Date()
-    }];
+    return {
+        get: function(cb) {
+            return Users.all()
+                .then(function (result) {
+                    cb(null, result);
+                })
+                .catch(function (err) {
+                    cb(err);
+                });
+        },
+        post: function(user, cb) {
+            return Users.create(user)
+                .then(function(err, result) {
+                    if (err) {
+                        cb(err);
+                        return;
+                    }
+
+                    cb(null, result);
+                })
+                .catch(function (err) {
+                    cb(err);
+                });
+        }
+    };
 };
 
 module.exports = UsersModel;
