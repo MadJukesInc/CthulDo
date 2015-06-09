@@ -17,7 +17,9 @@ module.exports = Backbone.View.extend({
         return {
             'submit .add-task': 'onAddTask',
             'click .delete-task': 'remTask',
-            'click .complete': 'markCompleted'
+            'click .complete': 'markCompleted',
+            'click .taskMembersSubmit': 'collapseTaskMembers',
+            'click .memberInputSubmit': 'collapseMemberInput'
         };
     },
 
@@ -45,8 +47,6 @@ module.exports = Backbone.View.extend({
                 });
             }
         });
-
-
     },
 
     onAddTask: function (e) {
@@ -113,6 +113,17 @@ module.exports = Backbone.View.extend({
         });
 
         return true;
-    }
+    },
 
+    collapseMemberInput: function (e) {
+        e.preventDefault();
+        console.log('collapse Member Input');
+        $( '.memberInput' ).collapse( 'toggle' );
+    },
+
+    collapseTaskMembers: function (e) {
+        e.preventDefault();
+        $( '.memberInput' ).collapse( 'toggle' );
+        console.log('collapse Task Members');
+    }
 });
