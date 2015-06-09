@@ -9,7 +9,7 @@ module.exports = function (router) {
         tasks.get(function (err, results) {
             if (err) {
                 res.sendStatus(500);
-                return;
+                throw err;
             }
 
             res.status(200);
@@ -23,7 +23,7 @@ module.exports = function (router) {
         tasks.post(newTask, function (err, results) {
             if (err) {
                 res.sendStatus(500);
-                return;
+                throw err;
             }
 
             res.status(200);
