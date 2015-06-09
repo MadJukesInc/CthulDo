@@ -3,21 +3,21 @@
         <div class="input-group">
             <input class="form-control" required name="title" type="text"
                    placeholder="Task title">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success add-task" type="submit">
-                                    Add
-                                </button>
-                            </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-success add-task" type="submit">
+                        Add
+                    </button>
+                </span>
         </div>
     </form>
 
 </div>
-<table class="table table-hover">
+<table class="table table-hover table-condensed">
     <thead>
-        <th>Completed</th>
-        <th>Title</th>
-        <th>Member</th>
-        <th></th>
+        <th class="col-sm-2"></th>
+        <th class="col-sm-4">Title</th>
+        <th class="col-sm-4">Member</th>
+        <th class="col-sm-2"></th>
     </thead>
     {#tasks}
         <tr id="tr-{id}">
@@ -32,15 +32,29 @@
                 </div>
             </td>
             <td>
-                <div class="btn-group" role="group" aria-label="...">
-                    {#members}
-                        <button class="btn btn-default btn-xs">
-                            {name}
+                <div class="col-sm-10">
+                    <div class="row taskMembers collapse in" aria-expanded="true">
+                        <div class="btn-group" role="group" aria-label="...">
+                            {#members}
+                                <button class="btn btn-default btn-xs">
+                                    {name}
+                                </button>
+                            {/members}
+                            <button class="btn btn-default btn-xs taskMembersSubmit">
+                                <span class="glyphicon glyphicon-plus"> </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row memberInput collapse" aria-expanded="false">
+                        <div class="input-group">
+                            <input type="text" class="input-sm form-control"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-sm memberInputSubmit">
+                            <span class="glyphicon glyphicon-ok"></span>
                         </button>
-                    {/members}
-                    <button class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-plus"> </span>
-                    </button>
+                    </span>
+                        </div>
+                    </div>
                 </div>
             </td>
             <td>

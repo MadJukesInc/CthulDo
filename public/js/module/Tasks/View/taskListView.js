@@ -1,5 +1,6 @@
-var $ = require('jquery');
+var $ = jQuery = require('jquery');
 var _ = require('underscore');
+var bootstrap = require('bootstrap');
 var Backbone = require('backbone');
 Backbone.$ = $;
 var AppInstance;
@@ -14,9 +15,11 @@ module.exports = Backbone.View.extend({
      */
     events: function () {
         return {
-            'submit': 'onAddTask',
+            'submit .add-task': 'onAddTask',
             'click .delete-task': 'remTask',
-            'click .complete': 'markCompleted'
+            'click .complete': 'markCompleted',
+            'click .taskMembersSubmit': 'collapseTaskMembers',
+            'click .memberInputSubmit': 'collapseMemberInput'
         };
     },
 
@@ -44,8 +47,6 @@ module.exports = Backbone.View.extend({
                 });
             }
         });
-
-
     },
 
     onAddTask: function (e) {
@@ -112,5 +113,19 @@ module.exports = Backbone.View.extend({
         });
 
         return true;
+    },
+
+    collapseMemberInput: function (e) {
+        e.preventDefault();
+        var thisRow = $(e.target).parents('.row.memberInput');
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.taskMembers').collapse('show');
+    },
+
+    collapseTaskMembers: function (e) {
+        e.preventDefault();
+        var thisRow = $(e.target).parents('.row.taskMembers');
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.memberInput').collapse('show');
     }
 });

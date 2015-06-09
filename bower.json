@@ -23,7 +23,6 @@
   "dependencies": {
     "dustjs-linkedin": "~2.6.0",
     "dustjs-linkedin-helpers": "~1.6.0",
-    "bootstrap": "^3.3.4",
     "backbone.marionette": "^2.4.1",
     "backbone": "^1.2.0",
     "underscore": "^1.8.3",
