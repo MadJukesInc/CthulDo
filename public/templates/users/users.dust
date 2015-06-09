@@ -13,12 +13,12 @@
 
 </div>
 <table class="table">
-    <tr>
+    <thead>
         <th>Name:</th>
         <th>Date Created:</th>
         <th>Last Updated:</th>
         <th>Edit</th>
-    </tr>
+    </thead>
     {#users}
         <tr class="entry" id="tr-{id}">
             <td>{name} </td>
