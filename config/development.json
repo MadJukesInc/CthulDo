@@ -72,8 +72,25 @@
             "module": "lusca"
         },
         "session": {
-            "module": "memory",
-            "secret": "1dc7bd77d6f4c695f1841ed370b78b985999f13f"
+            "enabled": true,
+            "priority": 100,
+            "module": {
+                "name": "express-session",
+                "arguments": [
+                    {
+                        "key": "",
+                        "secret": "keyboard cat",
+                        "cookie": {
+                            "path": "/",
+                            "httpOnly": true,
+                            "maxAge": null
+                        },
+                        "resave": true,
+                        "saveUninitialized": true,
+                        "proxy": null
+                    }
+                ]
+            }
         },
         "flash": {
             "priority": 91,
