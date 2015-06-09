@@ -42,11 +42,7 @@ var TasksModel = function TasksModelConstructor() {
         },
         post: function (task, cb) {
             return Tasks.create(task)
-                .then(function (err, result) {
-                    if (err) {
-                        throw err;
-                    }
-
+                .then(function (result) {
                     cb(null, result);
                 })
                 .catch(function (err) {
