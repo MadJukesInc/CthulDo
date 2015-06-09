@@ -13,7 +13,7 @@ var TasksModel = function TasksModelConstructor() {
         createdAt: new Date(),
         updatedAt: new Date(),
         completed: true,
-        members: [],
+        members: [{name:'ONE'},{ name:'TWO' }],
         owner: 'me'
     }];
 };
