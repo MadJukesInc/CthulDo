@@ -70,6 +70,18 @@
             "enabled": false,
             "priority": 111,
             "module": "lusca"
+        },
+        "session": {
+            "module": "memory",
+            "secret": "1dc7bd77d6f4c695f1841ed370b78b985999f13f"
+        },
+        "flash": {
+            "priority": 91,
+            "enabled": true,
+            "module": {
+                "name":"connect-flash",
+                "method": "flash"
+            }
         }
 
     },
