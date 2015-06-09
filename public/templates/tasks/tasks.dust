@@ -3,11 +3,11 @@
         <div class="input-group">
             <input class="form-control" required name="title" type="text"
                    placeholder="Task title">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success add-task" type="submit">
-                                    Add
-                                </button>
-                            </span>
+                <span class="input-group-btn">
+                    <button class="btn btn-success add-task" type="submit">
+                        Add
+                    </button>
+                </span>
         </div>
     </form>
 
