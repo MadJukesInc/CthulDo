@@ -7,6 +7,7 @@ var template = require('../../../../templates/tasks/tasks.dust');
 var TaskModel = Backbone.Model.extend({
     url: '/api/tasks'
 });
+
 module.exports = Backbone.View.extend({
     /**
      * @returns {Object}
@@ -28,10 +29,11 @@ module.exports = Backbone.View.extend({
     render: function () {
         //this.$el.empty();
         var self = this;
-
         var tasklist = new TaskModel();
+
         tasklist.fetch({
             success: function (data) {
+                console.log(data);
                 template({tasks: _.toArray(data.attributes)}, function (error, html) {
                     if (error) {
                         console.log(error);
@@ -48,19 +50,22 @@ module.exports = Backbone.View.extend({
 
     onAddTask: function (e) {
         e.preventDefault();
+
         var formData = $('.task-form').serializeArray();
         var taskDetails = {};
+        var self = this;
+        var task = new TaskModel();
 
         _.forEach(formData, function forEveryFormData(val) {
             taskDetails[val.name] = val.value;
         });
-        var self = this;
 
-        var task = new TaskModel();
+        taskDetails.id = taskDetails.title;
+
         task.save(taskDetails, {
             success: function (task) {
                 console.log('Success');
-                //self.render();
+                self.render();
             }
         });
 
@@ -68,10 +73,13 @@ module.exports = Backbone.View.extend({
     },
     remTask: function (e) {
         e.preventDefault();
+
         var entry = e.currentTarget.value;
         var task = new TaskModel({
-            title: entry
+            id: entry,
+            completed: false
         });
+
         task.destroy({
             success: function () {
                 $('#tr-' + entry).remove();
@@ -81,23 +89,28 @@ module.exports = Backbone.View.extend({
                 console.log('The Command to delete: ' + entry + ' failed');
             }
         });
+
         return false;
 
     },
     markCompleted: function (e) {
-        console.log(e);
-        var entry = e.currentTarget.value;
+        var completed = e.currentTarget.checked;
+        var entry = e.currentTarget.name;
         var task = new TaskModel({
-            title: entry
+            id: entry
         });
-        task.set({completed: true}, {
+        var self = this;
+
+        task.save({completed: completed}, {
             success: function () {
-                //$('#tr-' + entry).remove();
+                self.render();
+                $('#tr-' + entry).blur();
             },
             failure: function () {
                 console.log('The Command to delete: ' + entry + ' failed');
             }
         });
-        return false;
+
+        return true;
     }
 });

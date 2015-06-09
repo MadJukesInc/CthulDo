@@ -2,14 +2,15 @@
     <form class="form-user">
         <div class="input-group">
             <input class="form-control" required name="name" type="text"
-                   placeholder="Username">
-                <span class="input-group-btn">
-                    <button class="btn btn-default user-submit" type="submit">
-                        Add!
-                    </button>
-                </span>
+                   placeholder="Username Here">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success user-submit" type="submit">
+                                    Add!
+                                </button>
+                            </span>
         </div>
     </form>
+
 </div>
 <table class="table">
     <tr>
@@ -19,14 +20,15 @@
         <th>Edit</th>
     </tr>
     {#users}
-        <tr class="entry" id="tr-{name}">
+        <tr class="entry" id="tr-{id}">
             <td>{name} </td>
             <td>{createdAt}</td>
             <td>{updatedAt}</td>
             <td>
-                <button class="btn btn-warning delete-user" value="{name}">Delete</button>
+                <button class="btn btn-danger delete-user" value="{id}">Delete</button>
             </td>
         </tr>
     {/users}
 </table>
+
 
