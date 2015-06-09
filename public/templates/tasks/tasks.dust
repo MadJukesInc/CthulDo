@@ -23,7 +23,7 @@
         <tr id="tr-{id}">
             <td>
                 <div class="col-md-10 col-md-offset-1">
-                    <input class="complete" name="{title}" checked="{completed}" type="checkbox"/>
+                    <input class="complete" name="{title}" type="checkbox" {?completed}checked{/completed}/>
                 </div>
             </td>
             <td>
