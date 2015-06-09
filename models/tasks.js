@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var B = require('bluebird');
 
 var Tasks = require('../lib/dbModels/Tasks');
 
@@ -41,7 +42,20 @@ var TasksModel = function TasksModelConstructor() {
                 });
         },
         post: function (task, cb) {
-            return Tasks.create(task)
+            var promises = [];
+            var fulfilledPromise;
+
+            if (_.isArray(task)) {
+                _.forEach(user, function(v) {
+                    promises.push(Tasks.create(v));
+                });
+                fulfilledPromise = B.all(promises);
+            }
+            else if (_.isPlainObject(task)) {
+                fulfilledPromise = Tasks.create(task);
+            }
+
+            return fulfilledPromise
                 .then(function (result) {
                     cb(null, result);
                 })
