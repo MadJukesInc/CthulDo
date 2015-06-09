@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "adaro": "^0.1.5",
+    "bcrypt": "^0.8.3",
     "bluebird": "^2.9.27",
     "bootstrap-styl": "^4.0.4",
     "browserify": "~3.46.1",
@@ -23,6 +24,7 @@
     "kraken-js": "^1.0.1",
     "localizr": "^0.1.0",
     "lodash": "^3.9.3",
+    "nconf": "^0.7.1",
     "passport": "^0.2.2",
     "pg": "^4.4.0",
     "pg-hstore": "^2.3.2",
