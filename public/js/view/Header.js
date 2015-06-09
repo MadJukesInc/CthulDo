@@ -2,6 +2,8 @@ var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 Backbone.$ = $;
+var Session = require('../Session');
+
 module.exports = Backbone.View.extend({
 
     /**
@@ -12,9 +14,16 @@ module.exports = Backbone.View.extend({
     render: function () {
         var template = require('../../templates/layouts/header.dust');
         var self = this;
-        template({}, function (err, html) {
-            self.$el.append(html);
+        Session.fetch({
+            success: function() {
+                var helper = Session.attributes;
+
+                template(helper, function (err, html) {
+                    self.$el.append(html);
+                });
+                return this;
+            }
         });
-        return this;
+
     }
 });
