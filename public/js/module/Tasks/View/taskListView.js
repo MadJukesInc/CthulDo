@@ -14,7 +14,7 @@ module.exports = Backbone.View.extend({
      */
     events: function () {
         return {
-            'submit': 'onAddTask',
+            'submit .add-task': 'onAddTask',
             'click .delete-task': 'remTask',
             'click .complete': 'markCompleted'
         };
@@ -113,4 +113,5 @@ module.exports = Backbone.View.extend({
 
         return true;
     }
+
 });
