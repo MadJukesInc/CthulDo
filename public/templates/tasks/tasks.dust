@@ -13,12 +13,12 @@
 
 </div>
 <table class="table table-hover">
-    <tr>
+    <thead>
         <th>Completed</th>
         <th>Title</th>
         <th>Member</th>
         <th></th>
-    </tr>
+    </thead>
     {#tasks}
         <tr id="tr-{id}">
             <td>
