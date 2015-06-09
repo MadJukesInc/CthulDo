@@ -20,8 +20,6 @@ module.exports = function (router) {
     router.post('/', function(req, res) {
         var newTask = req.body;
 
-        console.log(JSON.parse(newTask));
-
         tasks.post(newTask, function (err, results) {
             if (err) {
                 res.sendStatus(500);
