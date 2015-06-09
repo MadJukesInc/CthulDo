@@ -117,13 +117,15 @@ module.exports = Backbone.View.extend({
 
     collapseMemberInput: function (e) {
         e.preventDefault();
-        console.log('collapse Member Input');
-        $( '.memberInput' ).collapse( 'toggle' );
+        var thisRow = $(e.target).parents('.row.memberInput');
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.taskMembers').collapse('show');
     },
 
     collapseTaskMembers: function (e) {
         e.preventDefault();
-        $( '.memberInput' ).collapse( 'toggle' );
-        console.log('collapse Task Members');
+        var thisRow = $(e.target).parents('.row.taskMembers');
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.memberInput').collapse('show');
     }
 });
