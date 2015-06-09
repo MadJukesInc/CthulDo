@@ -9,9 +9,8 @@
   },
   "dependencies": {
     "adaro": "^0.1.5",
-    "backbone.marionette": "^2.4.1",
     "bootstrap-styl": "^4.0.4",
-    "browserify": "^10.2.4",
+    "browserify": "~3.46.1",
     "debowerify": "^1.3.1",
     "dustjs-browserify": "^1.0.0",
     "dustjs-helpers": "~1.6.0",
@@ -27,10 +26,11 @@
     "pg": "^4.3.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.1.1",
+    "session": "^0.1.0",
     "stylus": "^0.51.1"
   },
   "devDependencies": {
-    "browserify": "^3.46.1",
+    "browserify": "~3.46.1",
     "grunt": "^0.4.1",
     "grunt-browserify": "^2.0.1",
     "grunt-config-dir": "^0.3.2",
