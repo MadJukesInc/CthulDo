@@ -35,11 +35,11 @@ module.exports = function (router) {
 
     });
 
-    router.put('/:taskID', function(req, res) {
+    router.post('/:taskID', function(req, res) {
 
     });
 
-    router.patch('/:taskID', function(req, res) {
+    router.put('/:taskID', function(req, res) {
 
     });
 
