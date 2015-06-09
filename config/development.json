@@ -1,18 +1,18 @@
 {
-
     "express": {
         "view cache": false,
         "view engine": "dust",
         "views": "path:./public/templates"
     },
-
     "view engines": {
         "dust": {
             "module": "engine-munger",
             "renderer": {
                 "method": "dust",
                 "arguments": [
-                    { "cache": false },
+                    {
+                        "cache": false
+                    },
                     {
                         "views": "config:express.views",
                         "view engine": "config:express.view engine",
@@ -23,9 +23,7 @@
             }
         }
     },
-
     "middleware": {
-
         "devtools": {
             "enabled": true,
             "priority": 35,
@@ -38,7 +36,15 @@
                         "browserify": {
                             "module": "kraken-devtools-browserify",
                             "files": "/js/**/*.js",
-                            "transform": ["debowerify"]
+                            "transform": [
+                                [
+                                    "dustjs-browserify",
+                                    {
+                                        "path": "public/templates"
+                                    }
+                                ],
+                                "debowerify"
+                            ]
                         },
                         "template": {
                             "module": "kraken-devtools/plugins/dustjs",
@@ -60,12 +66,10 @@
                 ]
             }
         },
-
         "appsec": {
             "enabled": false,
             "priority": 111,
             "module": "lusca"
         }
-
     }
 }

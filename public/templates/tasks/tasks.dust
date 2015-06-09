@@ -1,0 +1,52 @@
+<div class="panel-body">
+    <form class="task-form">
+        <div class="input-group">
+            <input class="form-control" required name="title" type="text"
+                   placeholder="Task title">
+        <span class="input-group-btn">
+            <button class="btn btn-default add-task" type="submit">
+                Add!
+            </button>
+        </span>
+        </div>
+    </form>
+</div>
+<table class="table table-hover">
+    <tr>
+        <th>Completed</th>
+        <th>Title</th>
+        <th>Member</th>
+        <th></th>
+    </tr>
+    {#tasks}
+        <tr id="tr-{title}">
+            <td>
+                <div class="col-md-10 col-md-offset-1">
+                    <input class="complete" value="{title}" type="checkbox"/>
+                </div>
+            </td>
+            <td>
+                <div>
+                    {title}
+                </div>
+            </td>
+            <td>
+                <div class="btn-group" role="group" aria-label="...">
+                    {#members}
+                        <button class="btn btn-default btn-xs">
+                            {name}
+                        </button>
+                    {/members}
+                    <button class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-plus"> </span>
+                    </button>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-default delete-task" value="{title}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+    {/tasks}
+</table>
