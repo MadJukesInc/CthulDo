@@ -12,7 +12,7 @@
     </form>
 
 </div>
-<table class="table table-hover">
+<table class="table table-hover table-condensed">
     <thead>
         <th>Completed</th>
         <th>Title</th>
