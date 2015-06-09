@@ -65,14 +65,20 @@ var TasksModel = function TasksModelConstructor() {
         },
         put: function (id, task, cb) {
             return Tasks.update(task, { where: { id: id } })
-                .then(function () {
-                    console.log(arguments);
+                .then(function (affected) {
+                    cb(null, { 'affected': affected[0] });
+                })
+                .catch(function (err) {
+                    cb(err);
                 });
         },
         delete: function (id, cb) {
             return Tasks.destroy({ where: { id: id } })
-                .then(function () {
-                    console.log(arguments);
+                .then(function (affected) {
+                    cb(null, { 'affected': affected });
+                })
+                .catch(function (err) {
+                    cb(err);
                 });
         }
     }
