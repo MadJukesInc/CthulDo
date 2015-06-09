@@ -6,7 +6,7 @@ var TasksModel = function TasksModelConstructor() {
         createdAt: new Date(),
         updatedAt: new Date(),
         completed: false,
-        members: [],
+        members: [{name: "bob"},{name: "kyle"}],
         owner: 'me'
     }, {
         title: 'two',
