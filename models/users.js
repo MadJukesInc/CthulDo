@@ -15,12 +15,7 @@ var UsersModel = function UsersModelConstructor() {
         },
         post: function(user, cb) {
             return Users.create(user)
-                .then(function(err, result) {
-                    if (err) {
-                        cb(err);
-                        return;
-                    }
-
+                .then(function(result) {
                     cb(null, result);
                 })
                 .catch(function (err) {
