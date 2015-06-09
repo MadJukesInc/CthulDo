@@ -1,39 +1,80 @@
 'use strict';
 
 var _ = require('lodash');
-var TasksModel = require('../../../models/tasks');
+var tasks = require('../../models/tasks');
 
 
 module.exports = function (router) {
-    var tasks = new TasksModel();
+    var onTaskPostOrPut = function(req, res) {
+        var taskID = req.params.taskID;
+        var task = req.body;
+
+        tasks.put(taskID, task, function (err, results) {
+            if (err) {
+                res.sendStatus(500);
+                throw err;
+            }
+
+            res.status(200);
+            res.send(results);
+        });
+    };
 
     router.get('/', function (req, res) {
-        res.status(200);
-        res.send(tasks);
+        tasks.get(function (err, results) {
+            if (err) {
+                res.sendStatus(500);
+                throw err;
+            }
+
+            res.status(200);
+            res.send(results);
+        });
     });
 
     router.post('/', function(req, res) {
         var newTask = req.body;
 
-        tasks.push(newTask);
+        tasks.post(newTask, function (err, results) {
+            if (err) {
+                res.sendStatus(500);
+                throw err;
+            }
 
-        res.status(200);
-        res.send(newTask);
+            res.status(200);
+            res.send(results);
+        });
     });
 
     router.get('/:taskID', function(req, res) {
+        var taskID = req.params.taskID;
 
+        tasks.get(taskID, function (err, results) {
+            if (err) {
+                res.sendStatus(500);
+                throw err;
+            }
+
+            res.status(200);
+            res.send(results);
+        })
     });
 
-    router.put('/:taskID', function(req, res) {
+    router.post('/:taskID', onTaskPostOrPut);
 
-    });
-
-    router.patch('/:taskID', function(req, res) {
-
-    });
+    router.put('/:taskID', onTaskPostOrPut);
 
     router.delete('/:taskID', function(req, res) {
+        var taskID = req.params.taskID;
 
+        tasks.delete(taskID, function(err, results) {
+            if (err) {
+                res.sendStatus(500);
+                throw err;
+            }
+
+            res.status(200);
+            res.send(results);
+        });
     });
 };

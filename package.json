@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "description": "ToDo App using Kraken.js",
   "author": "MadJukesInc",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "grunt test"
   },
   "dependencies": {
     "adaro": "^0.1.5",
     "backbone.marionette": "^2.4.1",
+    "bluebird": "^2.9.27",
     "bootstrap-styl": "^4.0.4",
     "browserify": "^10.2.4",
     "debowerify": "^1.3.1",
@@ -23,9 +24,9 @@
     "kraken-js": "^1.0.1",
     "localizr": "^0.1.0",
     "lodash": "^3.9.3",
-    "pg": "^4.3.0",
+    "pg": "^4.4.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.1.1",
+    "sequelize": "^3.2.0",
     "stylus": "^0.51.1"
   },
   "devDependencies": {
