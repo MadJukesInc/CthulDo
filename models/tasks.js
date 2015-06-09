@@ -13,29 +13,27 @@ var TasksModel = function TasksModelConstructor() {
          * @returns {*}
          */
         get: function (id, cb) {
+            var found;
+
             if (_.isUndefined(cb) && _.isFunction(id)) {
                 cb = id;
                 id = null;
             }
 
             if (_.isNull(id)) {
-                return Tasks.all()
-                    .then(function (results) {
-                        cb(null, results);
-                    })
-                    .catch(function (err) {
-                        cb(err);
-                    });
+                found = Tasks.all();
             }
             else {
-                return Tasks.findOne({ where: { id: id } })
-                    .then(function (results) {
-                        cb(null, results);
-                    })
-                    .catch(function (err) {
-                        cb(err);
-                    });
+                found = Tasks.findOne({ where: { id: id } });
             }
+
+            return found
+                .then(function (results) {
+                    cb(null, results);
+                })
+                .catch(function (err) {
+                    cb(err);
+                });
         },
         post: function (task, cb) {
             return Tasks.create(task)
