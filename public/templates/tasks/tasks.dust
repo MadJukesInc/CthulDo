@@ -3,13 +3,14 @@
         <div class="input-group">
             <input class="form-control" required name="title" type="text"
                    placeholder="Task title">
-        <span class="input-group-btn">
-            <button class="btn btn-default add-task" type="submit">
-                Add!
-            </button>
-        </span>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default add-task" type="submit">
+                                    Add!
+                                </button>
+                            </span>
         </div>
     </form>
+
 </div>
 <table class="table table-hover">
     <tr>
@@ -19,10 +20,10 @@
         <th></th>
     </tr>
     {#tasks}
-        <tr id="tr-{title}">
+        <tr id="tr-{id}">
             <td>
                 <div class="col-md-10 col-md-offset-1">
-                    <input class="complete" value="{title}" type="checkbox"/>
+                    <input class="complete" name="{title}" checked="{completed}" type="checkbox"/>
                 </div>
             </td>
             <td>
@@ -43,10 +44,11 @@
                 </div>
             </td>
             <td>
-                <button type="button" class="btn btn-default delete-task" value="{title}">
+                <button type="button" class="btn btn-default delete-task" value="{id}">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
             </td>
         </tr>
     {/tasks}
 </table>
+</div>
