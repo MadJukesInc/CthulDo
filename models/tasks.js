@@ -39,8 +39,7 @@ var TasksModel = function TasksModelConstructor() {
             return Tasks.create(task)
                 .then(function (err, result) {
                     if (err) {
-                        cb(err);
-                        return;
+                        throw err;
                     }
 
                     cb(null, result);
