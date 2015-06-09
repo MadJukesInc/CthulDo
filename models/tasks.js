@@ -4,6 +4,11 @@ var _ = require('lodash');
 
 var Tasks = require('../lib/dbModels/Tasks');
 
+/**
+ * Function returns map to work with {@link Tasks} table
+ * @returns {{get: Function, post: Function, put: Function, delete: Function}}
+ * @constructor
+ */
 var TasksModel = function TasksModelConstructor() {
     return {
         /**
