@@ -55,13 +55,13 @@ var TasksModel = function TasksModelConstructor() {
             return Tasks.update(task, { where: { id: id } })
                 .then(function () {
                     console.log(arguments);
-                })
+                });
         },
         delete: function (id, cb) {
             return Tasks.destroy({ where: { id: id } })
                 .then(function () {
                     console.log(arguments);
-                })
+                });
         }
     }
 };
