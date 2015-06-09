@@ -5,7 +5,7 @@
                    placeholder="Username Here">
                             <span class="input-group-btn">
                                 <button class="btn btn-success user-submit" type="submit">
-                                    Add!
+                                    Add
                                 </button>
                             </span>
         </div>
@@ -25,7 +25,9 @@
             <td>{createdAt}</td>
             <td>{updatedAt}</td>
             <td>
-                <button class="btn btn-danger delete-user" value="{id}">Delete</button>
+                <button class="btn btn-danger delete-user" value="{id}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
             </td>
         </tr>
     {/users}
