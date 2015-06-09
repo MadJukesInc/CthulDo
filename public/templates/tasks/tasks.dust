@@ -5,7 +5,7 @@
                    placeholder="Task title">
                             <span class="input-group-btn">
                                 <button class="btn btn-default add-task" type="submit">
-                                    Add!
+                                    Add
                                 </button>
                             </span>
         </div>
