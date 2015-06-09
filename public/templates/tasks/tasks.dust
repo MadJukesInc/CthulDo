@@ -4,7 +4,7 @@
             <input class="form-control" required name="title" type="text"
                    placeholder="Task title">
                             <span class="input-group-btn">
-                                <button class="btn btn-default add-task" type="submit">
+                                <button class="btn btn-success add-task" type="submit">
                                     Add
                                 </button>
                             </span>
@@ -44,7 +44,7 @@
                 </div>
             </td>
             <td>
-                <button type="button" class="btn btn-default delete-task" value="{id}">
+                <button type="button" class="btn btn-danger delete-task" value="{id}">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
             </td>
