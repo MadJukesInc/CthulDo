@@ -39,8 +39,8 @@ module.exports = function (router) {
     router.get('/', auth.isAuthenticated('admin'), function (req, res) {
         res.render('layouts/master', {});
     });
-    router.get('/session', auth.isAuthenticated('admin'), function(req, res) {
-        if(typeof req.user.username !== 'undefined' && typeof req.session.passport.user !== 'undefined'){
+    router.get('/session', auth.isAuthenticated('admin'), function (req, res) {
+        if (typeof req.user.username !== 'undefined' && typeof req.session.passport.user !== 'undefined') {
             res.send({auth: true, id: req.user.id, username: req.user.username, role: req.user.role});
         } else {
             res.send({auth: false});
