@@ -6,12 +6,13 @@
     },
     "view engines": {
         "dust": {
-            "module": "engine-munger",
+            "module": "adaro",
             "renderer": {
                 "method": "dust",
                 "arguments": [
                     {
-                        "cache": false
+                        "cache": false,
+                        "helpers": ["lib/dust-helper"]
                     },
                     {
                         "views": "config:express.views",
