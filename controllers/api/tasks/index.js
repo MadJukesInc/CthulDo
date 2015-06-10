@@ -21,15 +21,16 @@ module.exports = function (router) {
     };
     router.put('/', onTaskPostOrPut);
     router.get('/', function (req, res) {
-        tasks.get(function (err, results) {
-            if (err) {
-                res.sendStatus(500);
-                throw err;
-            }
+            tasks.get(function (err, results) {
+                if (err) {
+                    res.sendStatus(500);
+                    throw err;
+                }
 
-            res.status(200);
-            res.send(results);
-        });
+                res.status(200);
+                res.send(results);
+            });
+
     });
 
     router.post('/', function(req, res) {
@@ -64,9 +65,8 @@ module.exports = function (router) {
 
     router.put('/:taskID', onTaskPostOrPut);
 
-    router.delete('/', function(req, res) {
-        var taskID = req.params.taskID;
-
+    router.delete('/:id', function(req, res) {
+        var taskID = req.params.id;
         tasks.delete(taskID, function(err, results) {
             if (err) {
                 res.sendStatus(500);
