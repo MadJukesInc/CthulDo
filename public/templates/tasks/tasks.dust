@@ -17,15 +17,15 @@
 </div>
 <table class="table table-hover table-condensed">
     <thead>
-        <th class="col-sm-2">Done</th>
-        <th class="col-sm-4">Title</th>
-        <th class="col-sm-4">Member</th>
-        <th class="col-sm-4">Owner</th>
-        <th class="col-sm-2"></th>
+    <th class="col-sm-2">Done</th>
+    <th class="col-sm-4">Title</th>
+    <th class="col-sm-4">Member</th>
+    <th class="col-sm-4">Owner</th>
+    <th class="col-sm-2"></th>
     </thead>
     {#tasks}
 
-        <tr {?completed}class="success"{:else}class="danger"{/completed} id="tr-{id}">
+        <tr {?completed}class="success" {:else}class="danger"{/completed} id="tr-{id}">
             <td>
                 <div class="col-md-10 col-md-offset-1">
                     <input class="complete" name="{id}" type="checkbox" {?completed}checked{/completed}/>
@@ -53,11 +53,11 @@
                     <div class="row memberInput collapse" aria-expanded="false">
                         <div class="input-group">
                             {!<input id="memberInput-{id}" type="text" class="input-sm form-control"/>!}
-                        <select class="form-control" id="select-{id}">
-                            {#users}
-                                <option value="{username}">{username}</option>
-                            {/users}
-                        </select>
+                            <select class="form-control" id="select-{id}">
+                                {#users}
+                                    <option value="{username}">{username}</option>
+                                {/users}
+                            </select>
                     <span class="input-group-btn">
                         <button class="btn btn-default btn-sm memberInputSubmit" value="{id}">
                             <span class="glyphicon glyphicon-ok"></span>
@@ -69,7 +69,7 @@
             </td>
             <td>
                 <div>
-                    {owner}
+                    {#getUserName id=owner/}
                 </div>
             </td>
             <td>
@@ -80,4 +80,3 @@
         </tr>
     {/tasks}
 </table>
-</div>
