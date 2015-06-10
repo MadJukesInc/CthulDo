@@ -1,10 +1,49 @@
-
-var template = require('../../../../templates/tasks/tasks.dust');
 TaskModel = Backbone.Model.extend({
     urlRoot: 'http://localhost:8000/api/tasks'
 });
 
-module.exports = Backbone.View.extend({
+module.exports = Marionette.ItemView.extend({
+    template: require('../../../../templates/tasks/tasks.dust'),
+    helpers: function (cb) {
+        var tasklist = new TaskModel();
+
+        tasklist.fetch({
+            success: function (tasks) {
+                var taskList = _.toArray(tasks.attributes);
+                //_.forEach(taskList, function (task) {
+                //    task.owner = getOwnerName(task.owner);
+                //});
+                var helpers = {
+                    tasks: taskList,
+                    getUserName: function (chunk, context, bodies, params) {
+                        var user = new UserModel({id: params.id});
+                        return chunk.map(function (chunk) {
+                            user.fetch({
+                                success: function (user) {
+                                    var username = user.get('username');
+                                    return chunk.write(username + " (" + params.id + ")").end();
+
+                                },
+                                failure: function () {
+                                    return chunk.write('ERROR');
+                                }
+                            })
+                        })
+                    }
+                };
+                var userlist = new UserModel();
+
+                userlist.fetch({
+                    success: function (users) {
+                        helpers.users = _.toArray(users.attributes);
+                        cb(null,helpers);
+
+                    }
+                });
+
+            }
+        });
+    },
     /**
      * @returns {Object}
      */
@@ -26,31 +65,18 @@ module.exports = Backbone.View.extend({
      */
 
     render: function () {
-        //this.$el.empty();
         var self = this;
-        var tasklist = new TaskModel();
-
-        tasklist.fetch({
-            success: function (tasks) {
-                var helpers = {tasks: _.toArray(tasks.attributes)};
-                var userlist = new UserModel();
-
-                userlist.fetch({
-                    success: function (users) {
-                        helpers.users =  _.toArray(users.attributes);
-                        template(helpers, function (error, html) {
-                            if (error) {
-                                console.log(error);
-                            }
-                            else {
-                                self.$el.html(html);
-                            }
-                        });
-                    }
-                });
-
-            }
+        this.helpers(function (err, helpers) {
+            self.template(helpers, function (error, html) {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    self.$el.html(html);
+                }
+            });
         });
+
     },
 
     onAddTask: function (e) {
@@ -71,6 +97,9 @@ module.exports = Backbone.View.extend({
             success: function (task) {
                 console.log('Success');
                 self.render();
+            },
+            failure: function (error) {
+                console.log(error);
             }
         });
 
@@ -91,8 +120,8 @@ module.exports = Backbone.View.extend({
                 $('#tr-' + entry).remove();
 
             },
-            failure: function () {
-                console.log('The Command to delete: ' + entry + ' failed');
+            failure: function (error) {
+                console.log(error);
             }
         });
 
@@ -112,8 +141,8 @@ module.exports = Backbone.View.extend({
                 self.render();
                 $('#tr-' + entry).blur();
             },
-            failure: function () {
-                console.log('The Command to delete: ' + entry + ' failed');
+            failure: function (error) {
+                console.log(error);
             }
         });
 
@@ -142,8 +171,8 @@ module.exports = Backbone.View.extend({
                         thisRow.siblings('.row.taskMembers').collapse('show');
                         self.render();
                     },
-                    failure: function () {
-                        console.log('The Command to update: ' + id + ' failed');
+                    failure: function (error) {
+                        console.log(error);
                     }
                 });
             }
@@ -175,8 +204,8 @@ module.exports = Backbone.View.extend({
                     success: function () {
                         self.render();
                     },
-                    failure: function () {
-                        console.log('The Command to update: ' + id + ' failed');
+                    failure: function (error) {
+                        console.log(error);
                     }
                 });
             }
