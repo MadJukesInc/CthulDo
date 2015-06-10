@@ -1,8 +1,3 @@
-var $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
-Backbone.$ = $;
-var Session = require('../Session');
 
 module.exports = Backbone.View.extend({
 

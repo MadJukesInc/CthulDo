@@ -1,8 +1,10 @@
-var $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
+$ = jQuery = require('jquery');
+_ = require('underscore');
+bootstrap = require('bootstrap');
+Backbone = require('backbone');
 Backbone.$ = $;
-var Marionette = require('backbone.marionette');
+Marionette = require('backbone.marionette');
+Session = require('./Session');
 
 var Router = require('./Router'),
     Controller = require('./Controller'),
