@@ -7,19 +7,25 @@ var Users = require('../lib/dbModels/Users');
 
 var UsersModel = function UsersModelConstructor() {
     return {
-        get: function(name, cb) {
+        get: function (username, cb) {
             var found;
-
-            if (_.isUndefined(cb) && _.isFunction(name)) {
-                cb = name;
-                name = null;
+            //var username = usernameString + '';
+            //console.log(username);
+            if (_.isUndefined(cb) && _.isFunction(username)) {
+                cb = username;
+                username = null;
             }
 
-            if (_.isNull(name)) {
+            if (_.isNull(username)) {
                 found = Users.all();
             }
             else {
-                found = Users.findOne({ where: { name: name } });
+                if (_.isString(username)) {
+                    found = Users.findOne({where: {username: username}});
+                }
+                else {
+                    found = Users.findById(username);
+                }
             }
 
             return found
@@ -30,12 +36,12 @@ var UsersModel = function UsersModelConstructor() {
                     cb(err);
                 });
         },
-        post: function(user, cb) {
+        post: function (user, cb) {
             var promises = [];
             var fulfilledPromise;
 
             if (_.isArray(user)) {
-                _.forEach(user, function(v) {
+                _.forEach(user, function (v) {
                     promises.push(Users.create(v));
                 });
                 fulfilledPromise = B.all(promises);
@@ -45,7 +51,7 @@ var UsersModel = function UsersModelConstructor() {
             }
 
             return fulfilledPromise
-                .then(function(result) {
+                .then(function (result) {
                     cb(null, result);
                 })
                 .catch(function (err) {

@@ -30,7 +30,7 @@ var TasksModel = function TasksModelConstructor() {
                 found = Tasks.all();
             }
             else {
-                found = Tasks.findOne({ where: { id: id } });
+                found = Tasks.findById(id);
             }
 
             return found
