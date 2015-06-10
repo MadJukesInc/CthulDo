@@ -1,8 +1,10 @@
 <div class="panel-body">
     <form class="form-user">
         <div class="input-group">
-            <input class="form-control" required name="name" type="text"
+            <input class="form-control" required name="username" type="text"
                    placeholder="Username Here">
+            <input class="form-control" required name="password" type="text"
+                   placeholder="Password">
                             <span class="input-group-btn">
                                 <button class="btn btn-success user-submit" type="submit">
                                     Add
@@ -14,16 +16,20 @@
 </div>
 <table class="table">
     <thead>
-        <th>Name:</th>
+        <th>ID</th>
+        <th>username:</th>
         <th>Date Created:</th>
         <th>Last Updated:</th>
-        <th>Edit</th>
+        <th>password</th>
+        <th>Remove</th>
     </thead>
     {#users}
         <tr class="entry" id="tr-{id}">
-            <td>{name} </td>
+            <td>{id}</td>
+            <td>{username} </td>
             <td>{createdAt}</td>
             <td>{updatedAt}</td>
+            <td>{password}</td>
             <td>
                 <button class="btn btn-danger delete-user" value="{id}">
                     <span class="glyphicon glyphicon-remove"></span>
