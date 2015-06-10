@@ -5,7 +5,7 @@ Backbone.$ = $;
 var AppInstance;
 var template = require('../../../../templates/tasks/tasks.dust');
 var TaskModel = Backbone.Model.extend({
-    url: '/api/tasks'
+    url: 'http://localhost:8000/api/tasks'
 });
 
 module.exports = Backbone.View.extend({
@@ -60,7 +60,7 @@ module.exports = Backbone.View.extend({
             taskDetails[val.name] = val.value;
         });
 
-        taskDetails.id = taskDetails.title;
+        //taskDetails.id = taskDetails.title;
 
         task.save(taskDetails, {
             success: function (task) {
