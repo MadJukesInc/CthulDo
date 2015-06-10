@@ -3,8 +3,10 @@
         <div class="input-group">
             <input class="form-control" required name="username" type="text"
                    placeholder="Username Here">
-            <input class="form-control" required name="password" type="text"
+            <input class="form-control" required name="password" type="password"
                    placeholder="Password">
+            <input class="form-control" required name="role" type="text"
+                   placeholder="Role(admin)">
         </div>
         <div class="input-group">
 
