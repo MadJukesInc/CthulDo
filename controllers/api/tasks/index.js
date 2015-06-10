@@ -1,14 +1,14 @@
 'use strict';
 
 var _ = require('lodash');
-var tasks = require('../../models/tasks');
+var tasks = require('../../../models/tasks');
 
 
 module.exports = function (router) {
     var onTaskPostOrPut = function(req, res) {
-        var taskID = req.params.taskID;
+        var taskID = req.params.taskID || req.body.id;
         var task = req.body;
-
+        task.owner = req.user.id;
         tasks.put(taskID, task, function (err, results) {
             if (err) {
                 res.sendStatus(500);
@@ -19,7 +19,7 @@ module.exports = function (router) {
             res.send(results);
         });
     };
-
+    router.put('/', onTaskPostOrPut);
     router.get('/', function (req, res) {
         tasks.get(function (err, results) {
             if (err) {
@@ -34,7 +34,7 @@ module.exports = function (router) {
 
     router.post('/', function(req, res) {
         var newTask = req.body;
-
+        newTask.owner = req.user.id;
         tasks.post(newTask, function (err, results) {
             if (err) {
                 res.sendStatus(500);
@@ -64,7 +64,7 @@ module.exports = function (router) {
 
     router.put('/:taskID', onTaskPostOrPut);
 
-    router.delete('/:taskID', function(req, res) {
+    router.delete('/', function(req, res) {
         var taskID = req.params.taskID;
 
         tasks.delete(taskID, function(err, results) {
