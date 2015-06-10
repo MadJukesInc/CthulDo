@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var users = require('../../models/users');
+var users = require('../../../models/users');
 
 module.exports = function (router) {
     router.get('/', function(req, res) {

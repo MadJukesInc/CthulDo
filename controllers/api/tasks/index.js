@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var tasks = require('../../models/tasks');
+var tasks = require('../../../models/tasks');
 
 
 module.exports = function (router) {
