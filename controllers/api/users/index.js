@@ -15,7 +15,19 @@ module.exports = function (router) {
             res.send(results);
         });
     });
+    router.get('/:id', function(req, res) {
+        var userID = Number(req.params.id);
 
+        users.get(userID, function(err, results) {
+            if (err) {
+                res.sendStatus(500);
+                throw err;
+            }
+
+            res.status(200);
+            res.send(results);
+        });
+    });
     router.post('/', function(req, res) {
         var newUser = req.body;
 
