@@ -1,6 +1,6 @@
 var template = require('../../../../templates/users/users.dust');
 UserModel = Backbone.Model.extend({
-    url: 'http://localhost:8000/api/users'
+    urlRoot: 'http://localhost:8000/api/users'
 });
 
 module.exports = Backbone.View.extend({
