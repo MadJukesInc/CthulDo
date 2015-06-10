@@ -6,14 +6,14 @@ module.exports = Marionette.ItemView.extend({
     template: require('../../../../templates/tasks/tasks.dust'),
     helpers: function (cb) {
         var tasklist = new TaskModel();
-
+        var helpers = {};
         tasklist.fetch({
             success: function (tasks) {
                 var taskList = _.toArray(tasks.attributes);
                 //_.forEach(taskList, function (task) {
                 //    task.owner = getOwnerName(task.owner);
                 //});
-                var helpers = {
+                helpers = {
                     tasks: taskList,
                     getUserName: function (chunk, context, bodies, params) {
                         var user = new UserModel({id: params.id});
