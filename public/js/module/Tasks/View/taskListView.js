@@ -1,7 +1,7 @@
 
 var template = require('../../../../templates/tasks/tasks.dust');
 TaskModel = Backbone.Model.extend({
-    url: 'http://localhost:8000/api/tasks'
+    urlRoot: 'http://localhost:8000/api/tasks'
 });
 
 module.exports = Backbone.View.extend({
@@ -14,7 +14,8 @@ module.exports = Backbone.View.extend({
             'click .delete-task': 'remTask',
             'click .complete': 'markCompleted',
             'click .taskMembersSubmit': 'collapseTaskMembers',
-            'click .memberInputSubmit': 'collapseMemberInput'
+            'click .memberInputSubmit': 'collapseMemberInput',
+            'click .memberRemove': 'removeMember'
         };
     },
 
@@ -30,16 +31,24 @@ module.exports = Backbone.View.extend({
         var tasklist = new TaskModel();
 
         tasklist.fetch({
-            success: function (data) {
-                console.log(data);
-                template({tasks: _.toArray(data.attributes)}, function (error, html) {
-                    if (error) {
-                        console.log(error);
-                    }
-                    else {
-                        self.$el.html(html);
+            success: function (tasks) {
+                var helpers = {tasks: _.toArray(tasks.attributes)};
+                var userlist = new UserModel();
+
+                userlist.fetch({
+                    success: function (users) {
+                        helpers.users =  _.toArray(users.attributes);
+                        template(helpers, function (error, html) {
+                            if (error) {
+                                console.log(error);
+                            }
+                            else {
+                                self.$el.html(html);
+                            }
+                        });
                     }
                 });
+
             }
         });
     },
@@ -71,6 +80,7 @@ module.exports = Backbone.View.extend({
         e.preventDefault();
 
         var entry = e.currentTarget.value;
+        console.log(entry);
         var task = new TaskModel({
             id: entry,
             completed: false
@@ -114,16 +124,18 @@ module.exports = Backbone.View.extend({
         e.preventDefault();
         var self = this;
         var id = e.currentTarget.value;
-        var taskToUpdate = new TaskModel({
+        var task = new TaskModel({
             id: id
         });
-        var newMemberUsername = $('#memberInput-' + id).value;
-        taskToUpdate.fetch({
+        var newMemberUsername = $('#select-' + id).val();
+
+        task.fetch({
             success: function (task) {
-                var members = task.members || [];
+                var members = task.get('members') || [];
+
                 members.push(newMemberUsername);
 
-                taskToUpdate.save({members: members}, {
+                task.save({members: _.uniq(members)}, {
                     success: function () {
                         var thisRow = $(e.target).parents('.row.memberInput');
                         thisRow.collapse('toggle');
@@ -144,5 +156,30 @@ module.exports = Backbone.View.extend({
         var thisRow = $(e.target).parents('.row.taskMembers');
         thisRow.collapse('toggle');
         thisRow.siblings('.row.memberInput').collapse('show');
+    },
+
+    removeMember: function (e) {
+        e.preventDefault();
+        var self = this;
+        var id = e.currentTarget.parentNode.id;
+        var member = e.currentTarget.value;
+        var taskToUpdate = new TaskModel({
+            id: id
+        });
+
+        taskToUpdate.fetch({
+            success: function (task) {
+                var members = task.get('members') || [];
+
+                taskToUpdate.save({members: _.without(members, member)}, {
+                    success: function () {
+                        self.render();
+                    },
+                    failure: function () {
+                        console.log('The Command to update: ' + id + ' failed');
+                    }
+                });
+            }
+        })
     }
 });
