@@ -1,12 +1,3 @@
-/**
- * Created by kpineau on 09/06/15.
- */
-var $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
-Backbone.$ = $;
-var Marionette = require('backbone.marionette');
-
 var SessionModel = Backbone.Model.extend({
 
     urlRoot: '/session',

@@ -1,11 +1,6 @@
-var $ = jQuery = require('jquery');
-var _ = require('underscore');
-var bootstrap = require('bootstrap');
-var Backbone = require('backbone');
-Backbone.$ = $;
-var AppInstance;
+
 var template = require('../../../../templates/tasks/tasks.dust');
-var TaskModel = Backbone.Model.extend({
+TaskModel = Backbone.Model.extend({
     url: 'http://localhost:8000/api/tasks'
 });
 
@@ -15,7 +10,7 @@ module.exports = Backbone.View.extend({
      */
     events: function () {
         return {
-            'submit .add-task': 'onAddTask',
+            'click .add-task': 'onAddTask',
             'click .delete-task': 'remTask',
             'click .complete': 'markCompleted',
             'click .taskMembersSubmit': 'collapseTaskMembers',
@@ -117,9 +112,31 @@ module.exports = Backbone.View.extend({
 
     collapseMemberInput: function (e) {
         e.preventDefault();
-        var thisRow = $(e.target).parents('.row.memberInput');
-        thisRow.collapse('toggle');
-        thisRow.siblings('.row.taskMembers').collapse('show');
+        var self = this;
+        var id = e.currentTarget.value;
+        var taskToUpdate = new TaskModel({
+            id: id
+        });
+        var newMemberUsername = $('#memberInput-' + id).value;
+        taskToUpdate.fetch({
+            success: function (task) {
+                var members = task.members || [];
+                members.push(newMemberUsername);
+
+                taskToUpdate.save({members: members}, {
+                    success: function () {
+                        var thisRow = $(e.target).parents('.row.memberInput');
+                        thisRow.collapse('toggle');
+                        thisRow.siblings('.row.taskMembers').collapse('show');
+                        self.render();
+                    },
+                    failure: function () {
+                        console.log('The Command to update: ' + id + ' failed');
+                    }
+                });
+            }
+        })
+
     },
 
     collapseTaskMembers: function (e) {

@@ -1,5 +1,4 @@
-var Marionette = require('backbone.marionette'),
-    TasksRouter = require('./Router');
+var TasksRouter = require('./Router');
 
 module.exports = Marionette.Module.extend({
 

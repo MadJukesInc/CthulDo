@@ -1,6 +1,4 @@
-var Marionette = require('backbone.marionette'),
-    TasksController = require('./Controller'),
-    AppInstance;
+var TasksController = require('./Controller');
 
 module.exports = Marionette.AppRouter.extend({
     appRoutes: {

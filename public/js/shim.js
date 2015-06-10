@@ -1,3 +1,4 @@
-var app = require('./AppInstance');
-app.start();
+var App = require('./App');
+AppInstance = new App();
+AppInstance.start();
 

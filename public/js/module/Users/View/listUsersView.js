@@ -1,10 +1,5 @@
-var $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
-Backbone.$ = $;
-var AppInstance;
 var template = require('../../../../templates/users/users.dust');
-var UserModel = Backbone.Model.extend({
+UserModel = Backbone.Model.extend({
     url: 'http://localhost:8000/api/users'
 });
 
