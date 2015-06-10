@@ -70,6 +70,35 @@
             "enabled": false,
             "priority": 111,
             "module": "lusca"
+        },
+        "session": {
+            "enabled": true,
+            "priority": 100,
+            "module": {
+                "name": "express-session",
+                "arguments": [
+                    {
+                        "key": "",
+                        "secret": "keyboard cat",
+                        "cookie": {
+                            "path": "/",
+                            "httpOnly": true,
+                            "maxAge": null
+                        },
+                        "resave": true,
+                        "saveUninitialized": true,
+                        "proxy": null
+                    }
+                ]
+            }
+        },
+        "flash": {
+            "priority": 91,
+            "enabled": true,
+            "module": {
+                "name":"connect-flash",
+                "method": "flash"
+            }
         }
 
     },

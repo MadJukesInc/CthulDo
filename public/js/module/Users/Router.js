@@ -1,6 +1,4 @@
-var Marionette = require('backbone.marionette'),
-    UsersController = require('./Controller'),
-    AppInstance;
+var UsersController = require('./Controller');
 
 module.exports = Marionette.AppRouter.extend({
     appRoutes: {
@@ -21,7 +19,6 @@ module.exports = Marionette.AppRouter.extend({
      */
     onRoute: function () {
         // Use this to update the header
-        AppInstance = require('../../AppInstance');
         //AppInstance.regionHeader.show(new HeaderView());
     }
 });

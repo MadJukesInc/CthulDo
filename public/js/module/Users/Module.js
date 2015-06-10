@@ -1,5 +1,4 @@
-var Marionette = require('backbone.marionette'),
-    UsersRouter = require('./Router');
+var UsersRouter = require('./Router');
 
 module.exports = Marionette.Module.extend({
 

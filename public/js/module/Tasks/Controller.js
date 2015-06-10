@@ -1,5 +1,4 @@
-var Marionette = require('backbone.marionette'),
-    taskListView = require('./View/taskListView');
+var taskListView = require('./View/taskListView');
 
 module.exports = Marionette.Controller.extend({
 
@@ -11,7 +10,7 @@ module.exports = Marionette.Controller.extend({
     initialize: function () {
         // An example of giving the class an instance of the
         // instantiated application
-        this.appInstance = require('../../AppInstance');
+        this.appInstance = AppInstance;
     },
 
     /**

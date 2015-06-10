@@ -1,34 +1,38 @@
 <div class="panel-body">
     <form class="form-user">
         <div class="input-group">
-            <input class="form-control" required name="name" type="text"
+            <input class="form-control" required name="username" type="text"
                    placeholder="Username Here">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success user-submit" type="submit">
-                                    Add
-                                </button>
-                            </span>
+            <input class="form-control" required name="password" type="text"
+                   placeholder="Password">
+        </div>
+        <div class="input-group">
+
+            <button class="btn btn-success user-submit" type="submit">
+                Add
+            </button>
+            <button class="btn btn-danger" type="reset">
+                Clear
+            </button>
+
+
         </div>
     </form>
 
 </div>
 <table class="table">
     <thead>
-        <th>Name:</th>
-        <th>Date Created:</th>
-        <th>Last Updated:</th>
-        <th>Edit</th>
+    <th>ID</th>
+    <th>username:</th>
+    <th>password</th>
+    <th>Date Created:</th>
     </thead>
     {#users}
         <tr class="entry" id="tr-{id}">
-            <td>{name} </td>
+            <td>{id}</td>
+            <td>{username} </td>
+            <td>{password}</td>
             <td>{createdAt}</td>
-            <td>{updatedAt}</td>
-            <td>
-                <button class="btn btn-danger delete-user" value="{id}">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </td>
         </tr>
     {/users}
 </table>

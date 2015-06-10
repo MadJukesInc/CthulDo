@@ -1,11 +1,6 @@
-var $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
-Backbone.$ = $;
-var AppInstance;
 var template = require('../../../../templates/users/users.dust');
-var UserModel = Backbone.Model.extend({
-    url: '/api/users'
+UserModel = Backbone.Model.extend({
+    urlRoot: 'http://localhost:8000/api/users'
 });
 
 module.exports = Backbone.View.extend({
@@ -55,7 +50,7 @@ module.exports = Backbone.View.extend({
         _.forEach(formData, function forEveryFormData(val) {
             userDetails[val.name] = val.value;
         });
-        userDetails.id = userDetails.name;
+        //userDetails.id = userDetails.name;
 
         user.save(userDetails, {
             success: function (user) {

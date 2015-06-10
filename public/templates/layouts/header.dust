@@ -6,6 +6,9 @@
         <ul class="nav navbar-nav">
             <li><a href="#users">Users</a></li>
             <li><a href="#tasks">Tasks</a></li>
+            <li><a href="/logout">Logout</a></li>
+            <li></li>
+            <li><a>Welcome {username}</a></li>
         </ul>
     </div>
 </nav>
