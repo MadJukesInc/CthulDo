@@ -33,9 +33,7 @@ module.exports = Marionette.ItemView.extend({
                     isOwner: function (chunk, context, bodies, params) {
 
                         var userID = Session.get('id');
-                        console.log(userID);
-                        console.log(params.id);
-                       return userID === params.id;
+                        return userID === params.id;
 
                     }
 
