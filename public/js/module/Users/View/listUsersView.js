@@ -21,6 +21,9 @@ module.exports = Backbone.View.extend({
                 helpers.users =  _.toArray(data.attributes);
                 cb(null, helpers);
             }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
+            cb(error,null);
         });
     },
     /**
@@ -62,6 +65,8 @@ module.exports = Backbone.View.extend({
                 console.log('Success');
                 self.render();
             }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
         });
 
         return false;
