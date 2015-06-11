@@ -12,23 +12,16 @@ module.exports = function (router) {
         var task = req.body;
         var userID = req.user.id;
 
-        if (_.isUndefined(task.owner)) {
-            task.owner = userID;
-        }
-        else if (task.owner !== req.user.id) {
-            res.sendStatus(401);
-        }
-        else {
-            tasks.put(taskID, task, function (err, results) {
-                if (err) {
-                    res.sendStatus(500);
-                    throw err;
-                }
+        tasks.put(taskID, task, function (err, results) {
+            if (err) {
+                res.sendStatus(500);
+                throw err;
+            }
 
-                res.status(200);
-                res.send(results);
-            });
-        }
+            res.status(200);
+            res.send(results);
+        });
+
     };
 
     router.put('/', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
@@ -83,7 +76,7 @@ module.exports = function (router) {
     router.delete('/:id', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         var taskID = req.params.id;
         var userID = req.user.id;
-        tasks.get(taskID,'', function (err, task) {
+        tasks.get(taskID, '', function (err, task) {
             if (_.isUndefined(task.owner)) {
                 task.owner = req.user.id;
             }
