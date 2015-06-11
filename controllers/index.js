@@ -1,6 +1,5 @@
 'use strict';
 
-
 var auth = require('../lib/auth');
 var passport = require('passport');
 
@@ -36,10 +35,10 @@ module.exports = function (router) {
         res.redirect('/');
     });
 
-    router.get('/', auth.isAuthenticated('admin'), function (req, res) {
+    router.get('/', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         res.render('layouts/master', {});
     });
-    router.get('/session', auth.isAuthenticated('admin'), function (req, res) {
+    router.get('/session', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         if (typeof req.user.username !== 'undefined' && typeof req.session.passport.user !== 'undefined') {
 
             res.send({auth: true, id: req.user.id, username: req.user.username, role: req.user.role});

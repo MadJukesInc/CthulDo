@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 var tasks = require('../../../models/tasks');
+var auth = require('../../../lib/auth');
+var passport = require('passport');
 
 
 module.exports = function (router) {
@@ -26,10 +28,10 @@ module.exports = function (router) {
             });
         }
     };
-    router.put('/', onTaskPostOrPut);
-    router.get('/', function (req, res) {
+    router.put('/', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
+    router.get('/', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         var user = req.user;
-        tasks.get(user,function (err, results) {
+        tasks.get(user, function (err, results) {
             if (err) {
                 res.sendStatus(500);
                 throw err;
@@ -41,7 +43,7 @@ module.exports = function (router) {
 
     });
 
-    router.post('/', function (req, res) {
+    router.post('/', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         var newTask = req.body;
         newTask.owner = req.user.id;
         tasks.post(newTask, function (err, results) {
@@ -55,10 +57,10 @@ module.exports = function (router) {
         });
     });
 
-    router.get('/:taskID', function (req, res) {
+    router.get('/:taskID', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         var taskID = req.params.taskID;
         var user = req.user;
-        tasks.get(taskID,user, function (err, results) {
+        tasks.get(taskID, user, function (err, results) {
             if (err) {
                 res.sendStatus(500);
                 throw err;
@@ -69,11 +71,11 @@ module.exports = function (router) {
         })
     });
 
-    router.post('/:taskID', onTaskPostOrPut);
+    router.post('/:taskID', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
 
-    router.put('/:taskID', onTaskPostOrPut);
+    router.put('/:taskID', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
 
-    router.delete('/:id', function (req, res) {
+    router.delete('/:id', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         var taskID = req.params.id;
         tasks.get(taskID, function (err, task) {
             if (_.isUndefined(task.owner)) {

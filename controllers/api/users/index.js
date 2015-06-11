@@ -2,9 +2,11 @@
 
 var _ = require('lodash');
 var users = require('../../../models/users');
+var auth = require('../../../lib/auth');
+var passport = require('passport');
 
 module.exports = function (router) {
-    router.get('/', function(req, res) {
+    router.get('/', auth.isAuthenticated(['admin']),function(req, res) {
         users.get(function(err, results) {
             if (err) {
                 res.sendStatus(500);
@@ -15,7 +17,7 @@ module.exports = function (router) {
             res.send(results);
         });
     });
-    router.get('/:id', function(req, res) {
+    router.get('/:id', auth.isAuthenticated(['admin', 'user']),function(req, res) {
         var userID = Number(req.params.id);
 
         users.get(userID, function(err, results) {
@@ -28,7 +30,7 @@ module.exports = function (router) {
             res.send(results);
         });
     });
-    router.post('/', function(req, res) {
+    router.post('/', auth.isAuthenticated(['admin']),function(req, res) {
         var newUser = req.body;
 
         users.post(newUser, function(err, results) {
