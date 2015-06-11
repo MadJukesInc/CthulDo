@@ -80,7 +80,7 @@ module.exports = function (router) {
 
     router.put('/:taskID', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
 
-    router.delete('/:id', function (req, res) {
+    router.delete('/:id', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         var taskID = req.params.id;
         var userID = req.user.id;
         tasks.get(taskID,'', function (err, task) {
