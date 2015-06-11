@@ -29,19 +29,36 @@ module.exports = Marionette.ItemView.extend({
                                 }
                             })
                         })
+                    },
+                    isOwner: function (chunk, context, bodies, params) {
+
+                        var userID = Session.get('id');
+                        console.log(userID);
+                        console.log(params.id);
+                       return userID === params.id;
+
                     }
+
+
                 };
                 var userlist = new UserModel();
 
                 userlist.fetch({
                     success: function (users) {
-                        helpers.users = _.toArray(users.attributes);
+                        var list = [];
+                        _.forEach(users.attributes, function (user) {
+                            list.push(user.username);
+                        });
+                        helpers.users = list;
+                        helpers.filteredUsers = function (chunk, context, bodies, params) {
+                            return _.difference(this.users, params.members);
+                        };
                         cb(null, helpers);
 
                     }
                 }).fail(function (error) {
                     setNotify('danger', error.status + ' ' + error.statusText);
-                    cb(error,null);
+                    cb(error, null);
                 });
 
             }
@@ -61,7 +78,8 @@ module.exports = Marionette.ItemView.extend({
             'click .memberInputSubmit': 'collapseMemberInput',
             'click .memberRemove': 'removeMember'
         };
-    },
+    }
+    ,
 
     /**
      *
@@ -82,7 +100,8 @@ module.exports = Marionette.ItemView.extend({
             });
         });
 
-    },
+    }
+    ,
 
     onAddTask: function (e) {
         e.preventDefault();
@@ -98,7 +117,7 @@ module.exports = Marionette.ItemView.extend({
 
         //taskDetails.id = taskDetails.title;
 
-        task.save(taskDetails).then({
+        task.save(taskDetails, {
             success: function (task) {
                 console.log('Success');
                 self.render();
@@ -108,18 +127,18 @@ module.exports = Marionette.ItemView.extend({
         });
 
         return false;
-    },
+    }
+    ,
     remTask: function (e) {
         e.preventDefault();
 
         var entry = e.currentTarget.value;
         console.log(entry);
         var task = new TaskModel({
-            id: entry,
-            completed: false
+            id: entry
         });
 
-        task.destroy().then({
+        task.destroy({
             success: function () {
                 $('#tr-' + entry).remove();
 
@@ -130,7 +149,8 @@ module.exports = Marionette.ItemView.extend({
 
         return false;
 
-    },
+    }
+    ,
     markCompleted: function (e) {
         var completed = e.currentTarget.checked;
         var entry = e.currentTarget.name;
@@ -138,18 +158,24 @@ module.exports = Marionette.ItemView.extend({
             id: entry
         });
         var self = this;
-
-        task.save({completed: completed}, {
-            success: function () {
-                self.render();
-                $('#tr-' + entry).blur();
+        task.fetch({
+            success: function (task) {
+                task.save({completed: completed}, {
+                    success: function () {
+                        self.render();
+                        $('#tr-' + entry).blur();
+                        return true;
+                    }
+                }).fail(function (error) {
+                    self.render();
+                    setNotify('danger', error.status + ' ' + error.statusText);
+                });
             }
-        }).fail(function (error) {
-            setNotify('danger', error.status + ' ' + error.statusText);
         });
 
-        return true;
-    },
+
+    }
+    ,
 
     collapseMemberInput: function (e) {
         e.preventDefault();
@@ -184,14 +210,16 @@ module.exports = Marionette.ItemView.extend({
             setNotify('danger', error.status + ' ' + error.statusText);
         });
 
-    },
+    }
+    ,
 
     collapseTaskMembers: function (e) {
         e.preventDefault();
         var thisRow = $(e.target).parents('.row.taskMembers');
         thisRow.collapse('toggle');
         thisRow.siblings('.row.memberInput').collapse('show');
-    },
+    }
+    ,
 
     removeMember: function (e) {
         e.preventDefault();
@@ -206,7 +234,7 @@ module.exports = Marionette.ItemView.extend({
             success: function (task) {
                 var members = task.get('members') || [];
 
-                taskToUpdate.save({members: _.without(members, member)}).then({
+                taskToUpdate.save({members: _.without(members, member)}, {
                     success: function () {
                         self.render();
                     }
@@ -218,4 +246,5 @@ module.exports = Marionette.ItemView.extend({
             setNotify('danger', error.status + ' ' + error.statusText);
         });
     }
-});
+})
+;

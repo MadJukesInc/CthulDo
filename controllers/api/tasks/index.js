@@ -10,8 +10,10 @@ module.exports = function (router) {
     var onTaskPostOrPut = function (req, res) {
         var taskID = req.params.taskID || req.body.id;
         var task = req.body;
+        var userID = req.user.id;
+
         if (_.isUndefined(task.owner)) {
-            task.owner = req.user.id;
+            task.owner = userID;
         }
         else if (task.owner !== req.user.id) {
             res.sendStatus(401);
@@ -28,9 +30,12 @@ module.exports = function (router) {
             });
         }
     };
+
     router.put('/', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
+
     router.get('/', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         var user = req.user;
+
         tasks.get(user, function (err, results) {
             if (err) {
                 res.sendStatus(500);
@@ -75,13 +80,14 @@ module.exports = function (router) {
 
     router.put('/:taskID', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
 
-    router.delete('/:id', auth.isAuthenticated(['admin', 'user']), function (req, res) {
+    router.delete('/:id', function (req, res) {
         var taskID = req.params.id;
-        tasks.get(taskID, function (err, task) {
+        var userID = req.user.id;
+        tasks.get(taskID,'', function (err, task) {
             if (_.isUndefined(task.owner)) {
                 task.owner = req.user.id;
             }
-            else if (task.owner !== req.user.id) {
+            else if (task.owner !== userID) {
                 res.sendStatus(401);
             }
             else {
