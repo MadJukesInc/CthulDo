@@ -8,9 +8,9 @@ module.exports = function (router) {
     router.get('/login', function (req, res) {
 
         //Include any error messages that come from the login process.
-        //model.messages = req.flash('error');
-        console.log(req.flash('error'));
-        res.render('login/login', {});
+        var model = {};
+        model.errors = req.flash('error');
+        res.render('login/login', model);
     });
 
     /**
@@ -20,11 +20,13 @@ module.exports = function (router) {
      *
      * Failed authentications will go back to the login page with a helpful error message to be displayed.
      */
-    router.post('/login',
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: "/login"
-        })
+    router.post('/login',function (req, res) {
+            passport.authenticate('local', {
+                successRedirect: '/',
+                failureRedirect: "/login",
+                failureFlash: true
+            })(req, res)
+        }
     );
 
     /**
