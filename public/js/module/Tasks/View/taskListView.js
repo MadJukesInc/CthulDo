@@ -74,7 +74,9 @@ module.exports = Marionette.ItemView.extend({
             'click .complete': 'markCompleted',
             'click .taskMembersSubmit': 'collapseTaskMembers',
             'click .memberInputSubmit': 'collapseMemberInput',
-            'click .memberRemove': 'removeMember'
+            'click .memberRemove': 'removeMember',
+            'dblclick .title': 'editTask',
+            'click .saveTitle': 'updateTitle'
         };
     }
     ,
@@ -243,6 +245,37 @@ module.exports = Marionette.ItemView.extend({
         }).fail(function (error) {
             setNotify('danger', error.status + ' ' + error.statusText);
         });
-    }
-})
-;
+    },
+    editTask: function (e) {
+        e.preventDefault();
+        var thisRow = $(e.target);
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.titleEdit').collapse('show');
+      
+        },
+        updateTitle: function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        var thisRow = $(e.target).parents('.row.titleEdit');
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.title').collapse('show');
+         var taskToUpdate = new TaskModel({
+            id: id
+        });
+         var self = this;
+         var title = $('#titleUpdate-' + id).val();
+         taskToUpdate.fetch({
+            success: function (task) {
+                taskToUpdate.save({title: title}, {
+                    success: function () {
+                        self.render();
+                    }
+                }).fail(function (error) {
+                    setNotify('danger', error.status + ' ' + error.statusText);
+                });
+            }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
+        });
+        }
+});

@@ -32,8 +32,18 @@
                 </div>
             </td>
             <td>
-                <div>
+                <div class="row title collapse in" aria-expanded="true" name="{id}" >
                     {title}
+                </div>
+                <div class="row titleEdit collapse" aria-expanded="false" >
+                    <div class="input-group input-group-sm col-sm-8">
+                    <input class="input-xs form-control " name="title" id="titleUpdate-{id}" type="text" value="{title}" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-sm saveTitle" value="{id}">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </span>
+                    </div>
                 </div>
             </td>
             <td>
