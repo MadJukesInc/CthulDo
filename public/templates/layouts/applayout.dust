@@ -1,0 +1,41 @@
+<page>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Test App</title>
+        <link rel="stylesheet" href="css/app.css"/>
+        <script type="text/javascript">
+
+        </script>
+    </head>
+
+    <body>
+    <div class="header"></div>
+    <div class="sidebar"></div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1>CthulDo</h1>
+                    </div>
+                    <div id="wrapper" class="content">
+                        {#errors}
+                            <div class="alert alert-danger" role="alert"> {.}</div>
+                        {/errors}
+                        {+body}
+                            <div class="panel-body"><h3>Loading Application</h3></div>
+                        {!page content goes here!}
+                        {/body}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+    </body>
+    </html>
+</page>

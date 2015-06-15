@@ -17,23 +17,33 @@
 </div>
 <table class="table table-hover table-condensed">
     <thead>
-        <th class="col-sm-2">Done</th>
-        <th class="col-sm-4">Title</th>
-        <th class="col-sm-4">Member</th>
-        <th class="col-sm-4">Owner</th>
-        <th class="col-sm-2"></th>
+    <th class="col-sm-2">Done</th>
+    <th class="col-sm-4">Title</th>
+    <th class="col-sm-4">Member</th>
+    <th class="col-sm-4">Owner</th>
+    <th class="col-sm-2"></th>
     </thead>
     {#tasks}
 
-        <tr {?completed}class="success"{:else}class="danger"{/completed} id="tr-{id}">
+        <tr {?completed}class="success" {:else}class="danger"{/completed} id="tr-{id}">
             <td>
                 <div class="col-md-10 col-md-offset-1">
                     <input class="complete" name="{id}" type="checkbox" {?completed}checked{/completed}/>
                 </div>
             </td>
             <td>
-                <div>
+                <div class="row title collapse in" aria-expanded="true" name="{id}" >
                     {title}
+                </div>
+                <div class="row titleEdit collapse" aria-expanded="false" >
+                    <div class="input-group input-group-sm col-sm-8">
+                    <input class="input-xs form-control " name="title" id="titleUpdate-{id}" type="text" value="{title}" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-sm saveTitle" value="{id}">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </span>
+                    </div>
                 </div>
             </td>
             <td>
@@ -45,19 +55,23 @@
                                     {.}
                                 </button>
                             {/members}
-                            <button class="btn btn-default btn-xs taskMembersSubmit">
-                                <span class="glyphicon glyphicon-plus"> </span>
-                            </button>
+                            {#isOwner id=owner}
+                                {?.}
+                                    <button class="btn btn-default btn-xs taskMembersSubmit">
+                                        <span class="glyphicon glyphicon-plus"> </span>
+                                    </button>
+                                {/.}
+                            {/isOwner}
                         </div>
                     </div>
                     <div class="row memberInput collapse" aria-expanded="false">
                         <div class="input-group">
                             {!<input id="memberInput-{id}" type="text" class="input-sm form-control"/>!}
-                        <select class="form-control" id="select-{id}">
-                            {#users}
-                                <option value="{username}">{username}</option>
-                            {/users}
-                        </select>
+                            <select class="form-control" id="select-{id}">
+                                {#filteredUsers members=members}
+                                    <option value="{.}">{.}</option>
+                                {/filteredUsers}
+                            </select>
                     <span class="input-group-btn">
                         <button class="btn btn-default btn-sm memberInputSubmit" value="{id}">
                             <span class="glyphicon glyphicon-ok"></span>
@@ -69,7 +83,7 @@
             </td>
             <td>
                 <div>
-                    {owner}
+                    {#getUserName id=owner/}
                 </div>
             </td>
             <td>
@@ -80,4 +94,3 @@
         </tr>
     {/tasks}
 </table>
-</div>

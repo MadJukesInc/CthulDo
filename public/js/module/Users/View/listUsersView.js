@@ -1,4 +1,3 @@
-var template = require('../../../../templates/users/users.dust');
 UserModel = Backbone.Model.extend({
     urlRoot: 'http://localhost:8000/api/users'
 });
@@ -13,7 +12,20 @@ module.exports = Backbone.View.extend({
             'click .delete-user': 'remUser'
         };
     },
-
+    template: require('../../../../templates/users/users.dust'),
+    helpers: function (cb) {
+        var helpers = {};
+        var userlist = new UserModel();
+        userlist.fetch({
+            success: function (data) {
+                helpers.users =  _.toArray(data.attributes);
+                cb(null, helpers);
+            }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
+            cb(error,null);
+        });
+    },
     /**
      *
      * @chainable
@@ -22,19 +34,15 @@ module.exports = Backbone.View.extend({
 
     render: function () {
         var self = this;
-        var userlist = new UserModel();
-
-        userlist.fetch({
-            success: function (data) {
-                template({users: _.toArray(data.attributes)}, function (error, html) {
-                    if (error) {
-                        console.log(error);
-                    }
-                    else {
-                        self.$el.html(html);
-                    }
-                });
-            }
+        this.helpers(function (err, helpers) {
+            self.template(helpers, function (error, html) {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    self.$el.html(html);
+                }
+            });
         });
     },
 
@@ -57,11 +65,13 @@ module.exports = Backbone.View.extend({
                 console.log('Success');
                 self.render();
             }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
         });
 
         return false;
     },
-    remUser: function(e) {
+    remUser: function (e) {
         e.preventDefault();
 
         var entry = e.currentTarget.value;
@@ -71,7 +81,7 @@ module.exports = Backbone.View.extend({
 
         user.destroy({
             success: function () {
-                $('#tr-'+entry).remove();
+                $('#tr-' + entry).remove();
 
             },
             failure: function () {

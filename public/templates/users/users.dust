@@ -3,8 +3,10 @@
         <div class="input-group">
             <input class="form-control" required name="username" type="text"
                    placeholder="Username Here">
-            <input class="form-control" required name="password" type="text"
+            <input class="form-control" required name="password" type="password"
                    placeholder="Password">
+            <input class="form-control" required name="role" type="text"
+                   placeholder="Role(admin)">
         </div>
         <div class="input-group">
 
@@ -25,6 +27,7 @@
     <th>ID</th>
     <th>username:</th>
     <th>password</th>
+    <th>Role</th>
     <th>Date Created:</th>
     </thead>
     {#users}
@@ -32,6 +35,7 @@
             <td>{id}</td>
             <td>{username} </td>
             <td>{password}</td>
+            <td>{role}</td>
             <td>{createdAt}</td>
         </tr>
     {/users}

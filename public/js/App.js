@@ -12,6 +12,11 @@ var Router = require('./Router'),
     TasksModule = require('./module/Tasks/Module'),
     HeaderView = require('./view/Header.js');
 
+setNotify = function (type, message) {
+    AppInstance.regionNotify.$el.html('<div class="alert alert-' + type + '" role="alert">' + message + '</div>');
+    window.setTimeout(function () {  AppInstance.regionNotify.$el.html('') }, 2000);
+};
+
 module.exports = Marionette.Application.extend({
 
     /**
@@ -21,6 +26,7 @@ module.exports = Marionette.Application.extend({
      */
     regions: function () {
         return {
+            regionNotify: ".notifications",
             regionHeader: ".header",
             regionContent: ".content",
             regionFooter: ".footer",

@@ -1,6 +1,6 @@
 var SessionModel = Backbone.Model.extend({
 
-    urlRoot: '/session',
+    url: '/session',
     initialize: function () {
         var that = this;
         // Hook into jquery
@@ -24,4 +24,6 @@ var SessionModel = Backbone.Model.extend({
         });
     }
 });
-module.exports = new SessionModel();
+var Session = new SessionModel();
+Session.fetch();
+module.exports = Session;

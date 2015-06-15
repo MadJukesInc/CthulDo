@@ -1,10 +1,69 @@
-
-var template = require('../../../../templates/tasks/tasks.dust');
 TaskModel = Backbone.Model.extend({
     urlRoot: 'http://localhost:8000/api/tasks'
 });
 
-module.exports = Backbone.View.extend({
+module.exports = Marionette.ItemView.extend({
+    template: require('../../../../templates/tasks/tasks.dust'),
+    helpers: function (cb) {
+        var tasklist = new TaskModel();
+        var helpers = {};
+        tasklist.fetch({
+            success: function (tasks) {
+                var taskList = _.toArray(tasks.attributes);
+                //_.forEach(taskList, function (task) {
+                //    task.owner = getOwnerName(task.owner);
+                //});
+                helpers = {
+                    tasks: taskList,
+                    getUserName: function (chunk, context, bodies, params) {
+                        var user = new UserModel({id: params.id});
+                        return chunk.map(function (chunk) {
+                            user.fetch({
+                                success: function (user) {
+                                    var username = user.get('username');
+                                    return chunk.write(username + " (" + params.id + ")").end();
+
+                                },
+                                failure: function () {
+                                    return chunk.write('ERROR');
+                                }
+                            })
+                        })
+                    },
+                    isOwner: function (chunk, context, bodies, params) {
+
+                        var userID = Session.get('id');
+                        return userID === params.id;
+
+                    }
+
+
+                };
+                var userlist = new UserModel();
+
+                userlist.fetch({
+                    success: function (users) {
+                        var list = [];
+                        _.forEach(users.attributes, function (user) {
+                            list.push(user.username);
+                        });
+                        helpers.users = list;
+                        helpers.filteredUsers = function (chunk, context, bodies, params) {
+                            return _.difference(this.users, params.members);
+                        };
+                        cb(null, helpers);
+
+                    }
+                }).fail(function (error) {
+                    setNotify('danger', error.status + ' ' + error.statusText);
+                    cb(error, null);
+                });
+
+            }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
+        });
+    },
     /**
      * @returns {Object}
      */
@@ -15,9 +74,12 @@ module.exports = Backbone.View.extend({
             'click .complete': 'markCompleted',
             'click .taskMembersSubmit': 'collapseTaskMembers',
             'click .memberInputSubmit': 'collapseMemberInput',
-            'click .memberRemove': 'removeMember'
+            'click .memberRemove': 'removeMember',
+            'dblclick .title': 'editTask',
+            'click .saveTitle': 'updateTitle'
         };
-    },
+    }
+    ,
 
     /**
      *
@@ -26,32 +88,20 @@ module.exports = Backbone.View.extend({
      */
 
     render: function () {
-        //this.$el.empty();
         var self = this;
-        var tasklist = new TaskModel();
-
-        tasklist.fetch({
-            success: function (tasks) {
-                var helpers = {tasks: _.toArray(tasks.attributes)};
-                var userlist = new UserModel();
-
-                userlist.fetch({
-                    success: function (users) {
-                        helpers.users =  _.toArray(users.attributes);
-                        template(helpers, function (error, html) {
-                            if (error) {
-                                console.log(error);
-                            }
-                            else {
-                                self.$el.html(html);
-                            }
-                        });
-                    }
-                });
-
-            }
+        this.helpers(function (err, helpers) {
+            self.template(helpers, function (error, html) {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    self.$el.html(html);
+                }
+            });
         });
-    },
+
+    }
+    ,
 
     onAddTask: function (e) {
         e.preventDefault();
@@ -72,33 +122,35 @@ module.exports = Backbone.View.extend({
                 console.log('Success');
                 self.render();
             }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
         });
 
         return false;
-    },
+    }
+    ,
     remTask: function (e) {
         e.preventDefault();
 
         var entry = e.currentTarget.value;
         console.log(entry);
         var task = new TaskModel({
-            id: entry,
-            completed: false
+            id: entry
         });
 
         task.destroy({
             success: function () {
                 $('#tr-' + entry).remove();
 
-            },
-            failure: function () {
-                console.log('The Command to delete: ' + entry + ' failed');
             }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
         });
 
         return false;
 
-    },
+    }
+    ,
     markCompleted: function (e) {
         var completed = e.currentTarget.checked;
         var entry = e.currentTarget.name;
@@ -106,19 +158,24 @@ module.exports = Backbone.View.extend({
             id: entry
         });
         var self = this;
-
-        task.save({completed: completed}, {
-            success: function () {
-                self.render();
-                $('#tr-' + entry).blur();
-            },
-            failure: function () {
-                console.log('The Command to delete: ' + entry + ' failed');
+        task.fetch({
+            success: function (task) {
+                task.save({completed: completed}, {
+                    success: function () {
+                        self.render();
+                        $('#tr-' + entry).blur();
+                        return true;
+                    }
+                }).fail(function (error) {
+                    self.render();
+                    setNotify('danger', error.status + ' ' + error.statusText);
+                });
             }
         });
 
-        return true;
-    },
+
+    }
+    ,
 
     collapseMemberInput: function (e) {
         e.preventDefault();
@@ -141,22 +198,28 @@ module.exports = Backbone.View.extend({
                         thisRow.collapse('toggle');
                         thisRow.siblings('.row.taskMembers').collapse('show');
                         self.render();
-                    },
-                    failure: function () {
-                        console.log('The Command to update: ' + id + ' failed');
                     }
+                }).fail(function (error) {
+                    var thisRow = $(e.target).parents('.row.memberInput');
+                    thisRow.collapse('toggle');
+                    thisRow.siblings('.row.taskMembers').collapse('show');
+                    setNotify('danger', error.status + ' ' + error.statusText);
                 });
             }
-        })
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
+        });
 
-    },
+    }
+    ,
 
     collapseTaskMembers: function (e) {
         e.preventDefault();
         var thisRow = $(e.target).parents('.row.taskMembers');
         thisRow.collapse('toggle');
         thisRow.siblings('.row.memberInput').collapse('show');
-    },
+    }
+    ,
 
     removeMember: function (e) {
         e.preventDefault();
@@ -174,12 +237,45 @@ module.exports = Backbone.View.extend({
                 taskToUpdate.save({members: _.without(members, member)}, {
                     success: function () {
                         self.render();
-                    },
-                    failure: function () {
-                        console.log('The Command to update: ' + id + ' failed');
                     }
+                }).fail(function (error) {
+                    setNotify('danger', error.status + ' ' + error.statusText);
                 });
             }
-        })
-    }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
+        });
+    },
+    editTask: function (e) {
+        e.preventDefault();
+        var thisRow = $(e.target);
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.titleEdit').collapse('show');
+      
+        },
+        updateTitle: function (e) {
+        e.preventDefault();
+        var id = e.target.value;
+        var thisRow = $(e.target).parents('.row.titleEdit');
+        thisRow.collapse('toggle');
+        thisRow.siblings('.row.title').collapse('show');
+         var taskToUpdate = new TaskModel({
+            id: id
+        });
+         var self = this;
+         var title = $('#titleUpdate-' + id).val();
+         taskToUpdate.fetch({
+            success: function (task) {
+                taskToUpdate.save({title: title}, {
+                    success: function () {
+                        self.render();
+                    }
+                }).fail(function (error) {
+                    setNotify('danger', error.status + ' ' + error.statusText);
+                });
+            }
+        }).fail(function (error) {
+            setNotify('danger', error.status + ' ' + error.statusText);
+        });
+        }
 });

@@ -1,6 +1,5 @@
 'use strict';
 
-
 var auth = require('../lib/auth');
 var passport = require('passport');
 
@@ -9,9 +8,9 @@ module.exports = function (router) {
     router.get('/login', function (req, res) {
 
         //Include any error messages that come from the login process.
-        //model.messages = req.flash('error');
-        console.log(req.flash('error'));
-        res.render('login/login', {});
+        var model = {};
+        model.errors = req.flash('error');
+        res.render('login/login', model);
     });
 
     /**
@@ -21,11 +20,13 @@ module.exports = function (router) {
      *
      * Failed authentications will go back to the login page with a helpful error message to be displayed.
      */
-    router.post('/login',
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: "/login"
-        })
+    router.post('/login',function (req, res) {
+            passport.authenticate('local', {
+                successRedirect: '/',
+                failureRedirect: "/login",
+                failureFlash: true
+            })(req, res)
+        }
     );
 
     /**
@@ -36,10 +37,10 @@ module.exports = function (router) {
         res.redirect('/');
     });
 
-    router.get('/', auth.isAuthenticated('admin'), function (req, res) {
+    router.get('/', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         res.render('layouts/master', {});
     });
-    router.get('/session', auth.isAuthenticated('admin'), function (req, res) {
+    router.get('/session', auth.isAuthenticated(['admin', 'user']), function (req, res) {
         if (typeof req.user.username !== 'undefined' && typeof req.session.passport.user !== 'undefined') {
 
             res.send({auth: true, id: req.user.id, username: req.user.username, role: req.user.role});
