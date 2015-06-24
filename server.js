@@ -6,7 +6,7 @@ var https = require('https');
 
 var app = require('./index');
 
-var debugPort = process.env.PORT || 8000;
+var debugPort = process.env.PORT || 8088;
 // set to 80 to enable http service
 var httpPort = null;
 // set to 443 to enable https service

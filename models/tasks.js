@@ -18,17 +18,16 @@ var TasksModel = function TasksModelConstructor() {
          * @param {Function} cb Callback to execute after we found tasks
          * @returns {*}
          */
-        get: function (id,user, cb) {
+        get: function (id, cb) {
             var found;
 
-            if (_.isUndefined(cb) && _.isFunction(user)) {
-                cb = user;
-                user = id;
+            if (_.isUndefined(cb) && _.isFunction(id)) {
+                cb = id;
                 id = null;
             }
 
             if (_.isNull(id)) {
-                found = Tasks.findAll({where: {$or: [{owner: user.id},{ members: {$contains: [user.username]}}]}});
+                found = Tasks.findAll();
             }
             else {
                 found = Tasks.findById(id);

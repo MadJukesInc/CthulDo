@@ -7,6 +7,11 @@ var passport = require('passport');
 
 
 module.exports = function (router) {
+    router.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     var onTaskPostOrPut = function (req, res) {
         var taskID = req.params.taskID || req.body.id;
         var task = req.body;
@@ -19,29 +24,35 @@ module.exports = function (router) {
             }
 
             res.status(200);
-            res.send(results);
+            var wrappedResult = {
+                task: results
+            };
+            res.send(wrappedResult);
         });
 
     };
 
-    router.put('/', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
+    router.put('/',  onTaskPostOrPut);
 
-    router.get('/', auth.isAuthenticated(['admin', 'user']), function (req, res) {
-        var user = req.user;
-
-        tasks.get(user, function (err, results) {
+    router.get('/',  function (req, res) {
+        //var user = req.user;
+        console.log(req.session.passport);
+        tasks.get(function (err, results) {
             if (err) {
                 res.sendStatus(500);
                 throw err;
             }
 
             res.status(200);
-            res.send(results);
+            var wrappedResult = {
+                tasks: results
+            };
+            res.send(wrappedResult);
         });
 
     });
 
-    router.post('/', auth.isAuthenticated(['admin', 'user']), function (req, res) {
+    router.post('/',  function (req, res) {
         var newTask = req.body;
         newTask.owner = req.user.id;
         tasks.post(newTask, function (err, results) {
@@ -51,29 +62,35 @@ module.exports = function (router) {
             }
 
             res.status(200);
-            res.send(results);
+            var wrappedResult = {
+                task: results
+            };
+            res.send(wrappedResult);
         });
     });
 
-    router.get('/:taskID', auth.isAuthenticated(['admin', 'user']), function (req, res) {
-        var taskID = req.params.taskID;
-        var user = req.user;
-        tasks.get(taskID, user, function (err, results) {
+    router.get('/:taskID',  function (req, res) {
+        //var taskID = req.params.taskID;
+        //var user = req.user;
+        tasks.get(taskID, function (err, results) {
             if (err) {
                 res.sendStatus(500);
                 throw err;
             }
 
             res.status(200);
-            res.send(results);
+            var wrappedResult = {
+                task: results
+            };
+            res.send(wrappedResult);
         })
     });
 
-    router.post('/:taskID', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
+    router.post('/:taskID',  onTaskPostOrPut);
 
-    router.put('/:taskID', auth.isAuthenticated(['admin', 'user']), onTaskPostOrPut);
+    router.put('/:taskID',  onTaskPostOrPut);
 
-    router.delete('/:id', auth.isAuthenticated(['admin', 'user']), function (req, res) {
+    router.delete('/:id', function (req, res) {
         var taskID = req.params.id;
         var userID = req.user.id;
         tasks.get(taskID, '', function (err, task) {
@@ -91,7 +108,10 @@ module.exports = function (router) {
                     }
 
                     res.status(200);
-                    res.send(results);
+                    var wrappedResult = {
+                        task: results
+                    };
+                    res.send(wrappedResult);
                 });
             }
         });

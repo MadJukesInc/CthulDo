@@ -6,41 +6,56 @@ var auth = require('../../../lib/auth');
 var passport = require('passport');
 
 module.exports = function (router) {
-    router.get('/', auth.isAuthenticated(['admin']),function(req, res) {
-        users.get(function(err, results) {
+    router.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
+    router.get('/', function (req, res) {
+        users.get(function (err, results) {
             if (err) {
                 res.sendStatus(500);
                 throw err;
             }
 
             res.status(200);
-            res.send(results);
+            //console.log(results);
+            var wrappedResult = {
+                users: results
+            };
+            res.send(wrappedResult);
         });
     });
-    router.get('/:id', auth.isAuthenticated(['admin', 'user']),function(req, res) {
+    router.get('/:id',  function (req, res) {
         var userID = Number(req.params.id);
 
-        users.get(userID, function(err, results) {
+        users.get(userID, function (err, results) {
             if (err) {
                 res.sendStatus(500);
                 throw err;
             }
 
             res.status(200);
-            res.send(results);
+            var wrappedResult = {
+                user: results
+            };
+            res.send(wrappedResult);
         });
     });
-    router.post('/', auth.isAuthenticated(['admin']),function(req, res) {
+    router.post('/', function (req, res) {
         var newUser = req.body;
 
-        users.post(newUser, function(err, results) {
+        users.post(newUser, function (err, results) {
             if (err) {
                 res.sendStatus(500);
                 throw err;
             }
 
             res.status(200);
-            res.send(results);
+            var wrappedResult = {
+                user: results
+            };
+            res.send(wrappedResult);
         });
     });
 };

@@ -5,6 +5,11 @@ var passport = require('passport');
 
 
 module.exports = function (router) {
+    router.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     router.get('/login', function (req, res) {
 
         //Include any error messages that come from the login process.
@@ -20,12 +25,19 @@ module.exports = function (router) {
      *
      * Failed authentications will go back to the login page with a helpful error message to be displayed.
      */
-    router.post('/login',function (req, res) {
+    router.post('/login', function (req, res) {
             passport.authenticate('local', {
                 successRedirect: '/',
                 failureRedirect: "/login",
                 failureFlash: true
             })(req, res)
+        }
+    );
+    router.post('/external_login', passport.authenticate('local'), function (req, res) {
+            console.log(res.req.session);
+            //console.log('-------');
+            //console.log(req);
+            res.send(res.session);
         }
     );
 
